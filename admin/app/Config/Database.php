@@ -51,6 +51,41 @@ class Database extends Config
         ],
     ];
 
+    /**
+     * 마이그레이션 전용 접속 (테이블 생성/변경 권한 계정)
+     * 접속 정보는 .env 의 database.migrate.* 에서 채운다.
+     * 사용: env database.defaultGroup=migrate php spark migrate
+     *       (migrations 기록 테이블까지 이 계정으로 처리하기 위해 기본 그룹을 바꿔서 실행)
+     *
+     * @var array<string, mixed>
+     */
+    public array $migrate = [
+        'DSN'          => '',
+        'hostname'     => 'localhost',
+        'username'     => '',
+        'password'     => '',
+        'database'     => '',
+        'DBDriver'     => 'MySQLi',
+        'DBPrefix'     => '',
+        'pConnect'     => false,
+        'DBDebug'      => true,
+        'charset'      => 'utf8mb4',
+        'DBCollat'     => 'utf8mb4_unicode_ci',
+        'swapPre'      => '',
+        'encrypt'      => false,
+        'compress'     => false,
+        'strictOn'     => false,
+        'failover'     => [],
+        'port'         => 3306,
+        'numberNative' => false,
+        'foundRows'    => false,
+        'dateFormat'   => [
+            'date'     => 'Y-m-d',
+            'datetime' => 'Y-m-d H:i:s',
+            'time'     => 'H:i:s',
+        ],
+    ];
+
     //    /**
     //     * Sample database connection for SQLite3.
     //     *
