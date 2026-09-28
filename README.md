@@ -32,7 +32,7 @@ cd admin && composer install && cp env .env
 각 `.env`에 `app.baseURL`과 DB 접속 정보를 입력한다.
 DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 
-- user    : kbc_user    (필요한 테이블만 개별 권한 부여)
+- user    : kbc_user    (콘텐츠 테이블 조회 + 문의 테이블 등록만 가능, 문의 조회 불가)
 - admin   : kbc_admin   (조회/등록/수정/삭제)
 - migrate : kbc_migrate (테이블 생성/변경, 마이그레이션 실행 시에만 사용)
 
@@ -44,6 +44,31 @@ DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 cd admin
 env database.defaultGroup=migrate php spark migrate
 ```
+
+초기 콘텐츠(과정 3개, 강사 분야 5개, 사이트 설정 항목) 입력:
+
+```bash
+cd admin
+php spark db:seed InitialContentSeeder
+```
+
+이미 데이터가 있는 테이블은 건너뛴다. DB 구조 참고용 파일은 `database/schema.sql`.
+
+## 테이블
+
+| 테이블 | 용도 |
+|---|---|
+| admins | 관리자 계정 |
+| courses | 교육과정 |
+| instructors | 강사진 |
+| notices | 소식·공지 |
+| events | 설명회 일정 |
+| faqs | 자주 묻는 질문 |
+| site_settings | 사이트 설정 (연락처, 등록정보 등) |
+| consult_inquiries | 교육 상담 신청 |
+| partner_inquiries | 기관 협력 제안 |
+| inquiry_memos | 문의 메모·상태 이력 |
+| notification_logs | 알림 발송 기록 |
 
 ## 관리자 계정 생성
 
