@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>시안 A · 신뢰형 | KBC아카데미</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root {
+    --navy: #14264a;
+    --navy-2: #22396b;
+    --ink: #1b2432;
+    --muted: #5d6879;
+    --line: #e3e7ef;
+    --bg: #ffffff;
+    --bg-soft: #f5f7fb;
+    --badge: #eef2fa;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif; color: var(--ink);
+       background: var(--bg); line-height: 1.6; word-break: keep-all; }
+a { color: inherit; text-decoration: none; }
+.wrap { width: 100%; max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+.mock-bar { background: #eef1f6; font-size: 13px; color: var(--muted); }
+.mock-bar .wrap { display: flex; gap: 14px; align-items: center; justify-content: center; padding: 8px 20px; flex-wrap: wrap; }
+.mock-bar a { padding: 2px 10px; border-radius: 99px; }
+.mock-bar a.on { background: var(--navy); color: #fff; }
+
+header { position: sticky; top: 0; z-index: 10; background: rgba(255,255,255,.95); border-bottom: 1px solid var(--line);
+         backdrop-filter: blur(6px); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 18px; color: var(--navy); }
+.logo i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 8px; background: var(--navy);
+          color: #fff; font-style: normal; font-size: 12px; letter-spacing: .5px; }
+nav { display: flex; gap: 28px; font-size: 15px; color: var(--muted); }
+nav a:hover { color: var(--navy); }
+.btn { display: inline-flex; align-items: center; justify-content: center; height: 48px; padding: 0 22px; border-radius: 8px;
+       font-size: 15px; font-weight: 600; border: 1px solid transparent; cursor: pointer; font-family: inherit; }
+.btn-primary { background: var(--navy); color: #fff; }
+.btn-primary:hover { background: var(--navy-2); }
+.btn-line { border-color: var(--line); color: var(--navy); background: #fff; }
+.btn-sm { height: 40px; padding: 0 16px; font-size: 14px; }
+
+.hero { padding: 80px 0 88px; background: linear-gradient(180deg, #f7f9fd 0%, #fff 100%); }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+.eyebrow { display: inline-block; padding: 4px 12px; border-radius: 99px; background: var(--badge); color: var(--navy);
+           font-size: 13px; font-weight: 600; }
+.hero h1 { margin: 18px 0 16px; font-size: clamp(32px, 5vw, 50px); line-height: 1.25; color: var(--navy); letter-spacing: -1px; }
+.hero p { margin: 0 0 32px; font-size: 18px; color: var(--muted); }
+.hero .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-card { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px;
+             box-shadow: 0 12px 40px rgba(20, 38, 74, .08); }
+.hero-card h3 { margin: 0 0 18px; font-size: 16px; color: var(--navy); }
+.hero-card ol { margin: 0; padding: 0; list-style: none; counter-reset: s; }
+.hero-card li { display: flex; gap: 14px; align-items: center; padding: 14px 0; border-top: 1px solid var(--line); counter-increment: s; }
+.hero-card li:first-child { border-top: 0; }
+.hero-card li::before { content: counter(s); display: grid; place-items: center; flex: none; width: 30px; height: 30px;
+                        border-radius: 50%; background: var(--badge); color: var(--navy); font-weight: 700; font-size: 14px; }
+.hero-card small { display: block; color: var(--muted); font-size: 13px; }
+
+section { padding: 88px 0; }
+section.soft { background: var(--bg-soft); }
+.sec-head { margin-bottom: 40px; }
+.sec-head h2 { margin: 8px 0 10px; font-size: clamp(26px, 3.4vw, 34px); color: var(--navy); letter-spacing: -.5px; }
+.sec-head p { margin: 0; color: var(--muted); }
+.label { font-size: 13px; font-weight: 700; color: var(--navy-2); letter-spacing: 1px; }
+
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.card { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 28px; }
+.card h3 { margin: 0 0 8px; font-size: 20px; color: var(--navy); }
+.card p { margin: 0; color: var(--muted); font-size: 15px; }
+.note { margin-top: 18px; font-size: 13px; color: var(--muted); }
+
+.course { display: flex; flex-direction: column; }
+.course .tag { align-self: flex-start; margin-bottom: 14px; padding: 3px 10px; border-radius: 6px; font-size: 12px;
+               font-weight: 600; background: #fff4e5; color: #9a5b00; }
+.course dl { margin: 18px 0 22px; font-size: 14px; }
+.course dt { color: var(--muted); }
+.course dd { margin: 0 0 10px; font-weight: 600; }
+.course .btn { margin-top: auto; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { padding: 16px 20px; border: 1px solid var(--line); border-radius: 12px; background: #fff; flex: 1 1 190px; }
+.chip b { display: block; color: var(--navy); }
+.chip span { font-size: 14px; color: var(--muted); }
+
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; counter-reset: st; }
+.step { padding: 24px; border-radius: 14px; background: #fff; border: 1px solid var(--line); counter-increment: st; }
+.step::before { content: "STEP " counter(st); font-size: 12px; font-weight: 700; color: var(--navy-2); letter-spacing: 1px; }
+.step h3 { margin: 8px 0 0; font-size: 18px; color: var(--navy); }
+
+.career { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.flow { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-weight: 600; color: var(--navy); }
+.flow span { padding: 10px 16px; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
+.flow em { font-style: normal; color: var(--muted); }
+
+.empty { padding: 36px; text-align: center; border: 1px dashed #cdd4e1; border-radius: 14px; color: var(--muted); background: #fff; }
+
+.contact { display: grid; grid-template-columns: .9fr 1.1fr; gap: 48px; }
+.contact aside h2 { margin: 8px 0 12px; font-size: clamp(26px, 3.4vw, 34px); color: var(--navy); }
+.contact aside p { color: var(--muted); }
+form { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 28px; }
+.field { margin-bottom: 16px; }
+.field label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; }
+.field input, .field select, .field textarea { width: 100%; padding: 12px 14px; font: inherit; font-size: 15px;
+       border: 1px solid #cfd6e2; border-radius: 8px; background: #fff; }
+.field textarea { min-height: 96px; resize: vertical; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.agree { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0; font-size: 14px; }
+.agree input { margin-top: 4px; }
+.req { color: #c0392b; }
+.msg { display: none; margin-top: 14px; padding: 12px; border-radius: 8px; background: var(--badge); color: var(--navy); font-size: 14px; }
+
+footer { padding: 40px 0; background: var(--navy); color: #c9d2e3; font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+footer b { color: #fff; }
+
+@media (max-width: 900px) {
+    nav { display: none; }
+    .hero .wrap, .career, .contact { grid-template-columns: 1fr; }
+    .grid3 { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    section { padding: 64px 0; }
+    .hero { padding: 48px 0 64px; }
+}
+@media (max-width: 480px) {
+    .steps, .row2 { grid-template-columns: 1fr; }
+    .hero .actions .btn { flex: 1; }
+}
+</style>
+</head>
+<body>
+
+<div class="mock-bar"><div class="wrap">
+    디자인 시안 비교 <a href="index.html">목록</a> <a class="on" href="a.html">A 신뢰형</a> <a href="b.html">B 방송형</a> <a href="c.html">C 하이브리드</a>
+</div></div>
+
+<header><div class="wrap">
+    <a class="logo" href="#"><i>KBC</i>KBC아카데미</a>
+    <nav>
+        <a href="#about">아카데미</a><a href="#courses">교육과정</a><a href="#career">진로 연계</a><a href="#news">소식</a><a href="#contact">상담 문의</a>
+    </nav>
+    <a class="btn btn-primary btn-sm" href="#contact">사전 상담 신청</a>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+    <div>
+        <span class="eyebrow">2026년 10월 시범 개강 목표</span>
+        <h1>방송 진행을 배우고,<br>실습으로 완성합니다</h1>
+        <p>개인방송·커머스방송·협업형 라이브 진행을 위한 댄스, 보컬, 화술, 촬영, 편집, SNS 실습</p>
+        <div class="actions">
+            <a class="btn btn-primary" href="#contact">사전 상담 신청</a>
+            <a class="btn btn-line" href="#courses">과정 살펴보기</a>
+        </div>
+    </div>
+    <div class="hero-card">
+        <h3>KBC 교육 흐름</h3>
+        <ol>
+            <li><div>방송 콘셉트 설정<small>나에게 맞는 방송 분야 찾기</small></div></li>
+            <li><div>카메라 앞 실습<small>소규모 조별 송출 실습</small></div></li>
+            <li><div>녹화 피드백<small>녹화 영상으로 진행 점검</small></div></li>
+            <li><div>포트폴리오 제작<small>수료 산출물 완성</small></div></li>
+        </ol>
+    </div>
+</div></section>
+
+<section id="about"><div class="wrap">
+    <div class="sec-head">
+        <span class="label">FIELDS</span>
+        <h2>세 가지 방송 분야를 실습합니다</h2>
+        <p>춤과 노래뿐 아니라 진행력과 상품 설명 능력을 가진 분도 자신에게 맞는 분야를 찾을 수 있습니다.</p>
+    </div>
+    <div class="grid3">
+        <div class="card"><h3>개인방송</h3><p>방송 콘셉트 기획부터 출연, 진행, 채팅 소통까지 혼자서 방송을 운영하는 역량</p></div>
+        <div class="card"><h3>커머스방송</h3><p>상품 특성·가격·배송·환불 안내를 정확하게 전달하는 라이브 판매 진행</p></div>
+        <div class="card"><h3>협업형 라이브 방송</h3><p>여러 출연자가 함께하는 방송의 합의와 안전한 진행 규칙, 협업 진행</p></div>
+    </div>
+    <p class="note">플랫폼별 기능과 실제 방송 가능 여부는 개인 계정 자격·정책에 따릅니다.</p>
+</div></section>
+
+<section id="courses" class="soft"><div class="wrap">
+    <div class="sec-head">
+        <span class="label">COURSES</span>
+        <h2>교육과정</h2>
+        <p>현재 커리큘럼 제안 단계이며, 세부 시간표와 교습비는 확정 후 안내합니다.</p>
+    </div>
+    <div class="grid3">
+        <article class="card course">
+            <span class="tag">세부 시간표·교습비 확정 전</span>
+            <h3>속성 6주</h3><p>모의 라이브·숏폼</p>
+            <dl><dt>대상</dt><dd>기초 경험자·전환 희망자</dd><dt>수업</dt><dd>주 2회 (제안)</dd><dt>수료 산출물</dt><dd>자기소개 영상, 20분 모의 라이브, 숏폼 2편</dd></dl>
+            <a class="btn btn-line" href="#contact">이 과정 상담하기</a>
+        </article>
+        <article class="card course">
+            <span class="tag">세부 시간표·교습비 확정 전</span>
+            <h3>기본 3개월</h3><p>분야별 기초와 포트폴리오</p>
+            <dl><dt>대상</dt><dd>입문자</dd><dt>수업</dt><dd>주 2~3회 (제안)</dd><dt>수료 산출물</dt><dd>포트폴리오</dd></dl>
+            <a class="btn btn-line" href="#contact">이 과정 상담하기</a>
+        </article>
+        <article class="card course">
+            <span class="tag">세부 시간표·교습비 확정 전</span>
+            <h3>심화 6개월</h3><p>특화 실습·성과 분석</p>
+            <dl><dt>대상</dt><dd>전업·심화 희망자</dd><dt>수업</dt><dd>주 2~3회 (제안)</dd><dt>수료 산출물</dt><dd>브랜드 제안서, 성과 분석</dd></dl>
+            <a class="btn btn-line" href="#contact">이 과정 상담하기</a>
+        </article>
+    </div>
+</div></section>
+
+<section><div class="wrap">
+    <div class="sec-head">
+        <span class="label">INSTRUCTORS</span>
+        <h2>분야별 강사진</h2>
+        <p>강사 명단과 경력은 협업 확정 후 증빙을 확인해 공개합니다.</p>
+    </div>
+    <div class="chips">
+        <div class="chip"><b>댄스·표현</b><span>카메라 동선, 안무, 리듬, 무대 표현</span></div>
+        <div class="chip"><b>보컬·화술</b><span>발성, 호흡, 노래, 즉흥 멘트</span></div>
+        <div class="chip"><b>메이크업·스타일</b><span>조명별 메이크업, 화면 이미지 설계</span></div>
+        <div class="chip"><b>방송 제작</b><span>라이브 송출, 화면 전환, 오디오·영상 편집</span></div>
+        <div class="chip"><b>SNS·커머스</b><span>콘텐츠 기획, 지표 분석, 상품 시연과 응대</span></div>
+    </div>
+</div></section>
+
+<section class="soft"><div class="wrap">
+    <div class="sec-head"><span class="label">EXPERIENCE</span><h2>이렇게 배웁니다</h2></div>
+    <div class="steps">
+        <div class="step"><h3>방송 콘셉트 설정</h3></div>
+        <div class="step"><h3>카메라 앞 실습</h3></div>
+        <div class="step"><h3>녹화 피드백</h3></div>
+        <div class="step"><h3>포트폴리오 제작</h3></div>
+    </div>
+</div></section>
+
+<section id="career"><div class="wrap career">
+    <div class="sec-head" style="margin:0">
+        <span class="label">CAREER</span>
+        <h2>진로 연계</h2>
+        <p>커머스·라이브 방송 운영업체와 면접 연계 협약을 추진 중입니다. 제휴 확정 후 참여 조건을 안내합니다.</p>
+    </div>
+    <div class="flow"><span>포트폴리오</span><em>→</em><span>업체 설명회</span><em>→</em><span>면접·현장 테스트</span></div>
+</div></section>
+
+<section id="news" class="soft"><div class="wrap">
+    <div class="sec-head"><span class="label">NEWS</span><h2>소식</h2></div>
+    <div class="empty">설명회 일정은 확정 후 안내합니다.</div>
+</div></section>
+
+<section id="contact"><div class="wrap contact">
+    <aside>
+        <span class="label">CONTACT</span>
+        <h2>사전 상담 신청</h2>
+        <p>남겨주신 연락처로 상담 담당자가 연락드립니다.<br>교육 공간·강사·채용 협력은 기관 제안으로 문의해 주세요.</p>
+        <a class="btn btn-line" href="#contact">교육 공간·채용 협력 제안</a>
+    </aside>
+    <form onsubmit="return mockSubmit(this)">
+        <div class="row2">
+            <div class="field"><label for="a-name">이름 <span class="req">*</span></label><input id="a-name" required></div>
+            <div class="field"><label for="a-phone">연락처 <span class="req">*</span></label><input id="a-phone" type="tel" required placeholder="010-0000-0000"></div>
+        </div>
+        <div class="row2">
+            <div class="field"><label for="a-course">관심 과정</label>
+                <select id="a-course"><option>미정</option><option>속성 6주</option><option>기본 3개월</option><option>심화 6개월</option></select></div>
+            <div class="field"><label for="a-time">희망 연락시간</label><input id="a-time" placeholder="예) 평일 오후 2시 이후"></div>
+        </div>
+        <div class="field"><label for="a-msg">문의내용</label><textarea id="a-msg"></textarea></div>
+        <label class="agree"><input type="checkbox" required> <span>[필수] 개인정보 수집·이용에 동의합니다. <a href="#" style="text-decoration:underline">내용 보기</a></span></label>
+        <label class="agree"><input type="checkbox"> <span>[선택] 설명회·모집 안내 등 홍보성 연락을 받겠습니다.</span></label>
+        <button class="btn btn-primary" style="width:100%;margin-top:8px">상담 신청하기</button>
+        <p class="msg">시안 화면에서는 전송되지 않습니다.</p>
+    </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+    <div><b>KBC아카데미</b><br>KBC아카데미 개원 준비 중 / 강남 협업 교육장 검토 중</div>
+    <div>운영 주체·등록 정보: 준비 중<br><a href="#" style="text-decoration:underline">개인정보 처리방침</a> · © KBC아카데미</div>
+</div></footer>
+
+<script>
+function mockSubmit(form) {
+    form.querySelector('.msg').style.display = 'block';
+    return false;
+}
+</script>
+</body>
+</html>

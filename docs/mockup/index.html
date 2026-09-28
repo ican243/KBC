@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>디자인 시안 비교 | KBC아카데미</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+* { box-sizing: border-box; }
+body { margin: 0; padding: 48px 20px; font-family: "Pretendard Variable", Pretendard, sans-serif; background: #f4f6fa; color: #151c2b; word-break: keep-all; }
+.wrap { max-width: 1040px; margin: 0 auto; }
+h1 { margin: 0 0 8px; font-size: 28px; color: #0f1d3d; }
+.lead { margin: 0 0 32px; color: #5e6a7e; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+a.card { display: flex; flex-direction: column; border-radius: 20px; overflow: hidden; background: #fff; color: inherit; text-decoration: none;
+         border: 1px solid #e4e8f0; transition: transform .2s, box-shadow .2s; }
+a.card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(15,29,61,.1); }
+.thumb { height: 150px; position: relative; }
+.thumb i { position: absolute; left: 20px; right: 20px; height: 10px; border-radius: 5px; }
+.body { padding: 22px; flex: 1; }
+.body h2 { margin: 0 0 6px; font-size: 19px; }
+.body p { margin: 0; font-size: 14.5px; color: #5e6a7e; }
+.rec { display: inline-block; margin-left: 6px; padding: 2px 8px; border-radius: 6px; background: #ff3d57; color: #fff; font-size: 12px; vertical-align: middle; }
+.a { background: linear-gradient(180deg, #f7f9fd, #fff); border-bottom: 1px solid #e4e8f0; }
+.a i:nth-child(1) { top: 40px; width: 55%; background: #14264a; }
+.a i:nth-child(2) { top: 62px; width: 40%; background: #cfd6e2; }
+.a i:nth-child(3) { top: 100px; width: 90px; height: 28px; border-radius: 8px; background: #14264a; }
+.b { background: radial-gradient(circle at 30% 30%, #26407f, #070d1c 70%); }
+.b i:nth-child(1) { top: 40px; width: 60%; background: #fff; }
+.b i:nth-child(2) { top: 62px; width: 45%; background: #5d6d95; }
+.b i:nth-child(3) { top: 100px; width: 90px; height: 28px; border-radius: 99px; background: #ff3b5c; }
+.c { background: linear-gradient(180deg, #0f1d3d 62%, #fff 62%); }
+.c i:nth-child(1) { top: 30px; width: 50%; background: #fff; }
+.c i:nth-child(2) { top: 52px; width: 36%; background: #9fb8ff; }
+.c i:nth-child(3) { top: 22px; left: auto; right: 26px; width: 40px; height: 76px; border-radius: 10px; background: #2a3f7a; border: 3px solid #060c1b; }
+.c i:nth-child(4) { top: 112px; width: 26%; height: 26px; border-radius: 8px; background: #f4f6fa; }
+.c i:nth-child(5) { top: 112px; left: 38%; width: 26%; height: 26px; border-radius: 8px; background: #f4f6fa; }
+.memo { margin-top: 32px; padding: 22px 24px; border-radius: 16px; background: #fff; border: 1px solid #e4e8f0; font-size: 14.5px; color: #5e6a7e; }
+.memo b { color: #0f1d3d; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>KBC아카데미 홈 디자인 시안</h1>
+    <p class="lead">같은 내용(기획안 문구, 과정 3개, 강사 분야 5개)을 세 가지 스타일로 만들었습니다. 휴대폰으로도 확인해 보세요.</p>
+    <div class="grid">
+        <a class="card" href="a.html">
+            <div class="thumb a"><i></i><i></i><i></i></div>
+            <div class="body"><h2>A · 신뢰형</h2><p>밝은 배경과 남색 중심. 교육기관다운 안정감, 글 읽기와 폼 입력이 편함. 대신 개성은 약함.</p></div>
+        </a>
+        <a class="card" href="b.html">
+            <div class="thumb b"><i></i><i></i><i></i></div>
+            <div class="body"><h2>B · 방송형</h2><p>전체 다크 + LIVE 레드. 방송 현장 분위기가 가장 강함. 긴 글·폼은 읽기 불편하고 학원 신뢰감은 약함.</p></div>
+        </a>
+        <a class="card" href="c.html">
+            <div class="thumb c"><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="body"><h2>C · 하이브리드 <span class="rec">추천</span></h2><p>첫 화면만 방송형(세로 방송 화면), 나머지는 밝고 깔끔하게. 벤토 그리드, 모바일 하단 상담 버튼.</p></div>
+        </a>
+    </div>
+    <div class="memo">
+        <b>공통 사항</b> · 사진은 확보 전이라 사용하지 않았습니다(기획안 기준). · 전화번호·운영 정보는 확정 전이라 "준비 중"으로 표시했습니다.
+        · 상담 폼은 시안이라 전송되지 않습니다. · 글꼴: Pretendard.
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>시안 C · 하이브리드 | KBC아카데미</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root {
+    --navy: #0f1d3d;
+    --navy-2: #1b2f5e;
+    --ink: #151c2b;
+    --muted: #5e6a7e;
+    --line: #e4e8f0;
+    --bg: #ffffff;
+    --bg-soft: #f4f6fa;
+    --live: #ff3d57;
+    --live-soft: #fff0f2;
+    --blue-soft: #edf2ff;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: "Pretendard Variable", Pretendard, -apple-system, sans-serif; color: var(--ink);
+       background: var(--bg); line-height: 1.6; word-break: keep-all; }
+a { color: inherit; text-decoration: none; }
+.wrap { width: 100%; max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+
+.mock-bar { background: #e9edf4; font-size: 13px; color: var(--muted); }
+.mock-bar .wrap { display: flex; gap: 14px; align-items: center; justify-content: center; padding: 8px 20px; flex-wrap: wrap; }
+.mock-bar a { padding: 2px 10px; border-radius: 99px; }
+.mock-bar a.on { background: var(--navy); color: #fff; }
+
+/* 헤더: 첫 화면에서는 남색, 스크롤하면 흰색 */
+header { position: sticky; top: 0; z-index: 20; background: var(--navy); color: #fff; transition: background .25s, color .25s, box-shadow .25s; }
+header.scrolled { background: rgba(255,255,255,.96); color: var(--ink); box-shadow: 0 1px 0 var(--line); backdrop-filter: blur(8px); }
+header .wrap { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+.logo { display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 18px; letter-spacing: -.3px; }
+.logo i { width: 9px; height: 9px; border-radius: 50%; background: var(--live); }
+nav { display: flex; gap: 30px; font-size: 15px; opacity: .85; }
+nav a:hover { opacity: 1; text-decoration: underline; text-underline-offset: 6px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 24px;
+       border-radius: 14px; font-size: 16px; font-weight: 700; border: 1px solid transparent; cursor: pointer; font-family: inherit;
+       transition: transform .15s, background .15s; }
+.btn:active { transform: scale(.98); }
+.btn-live { background: var(--live); color: #fff; }
+.btn-live:hover { background: #ec2f49; }
+.btn-white { background: rgba(255,255,255,.1); color: #fff; border-color: rgba(255,255,255,.25); }
+.btn-navy { background: var(--navy); color: #fff; }
+.btn-line { background: #fff; color: var(--navy); border-color: var(--line); }
+.btn-sm { height: 40px; padding: 0 16px; font-size: 14px; border-radius: 10px; }
+
+/* 첫 화면 */
+.hero { position: relative; overflow: hidden; padding: 72px 0 96px; background: var(--navy); color: #fff; }
+.hero::before { content: ""; position: absolute; right: -10%; top: -20%; width: 60%; height: 140%;
+                background: radial-gradient(closest-side, rgba(91,130,255,.35), transparent 70%); pointer-events: none; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
+.live-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 14px; border-radius: 99px;
+             background: rgba(255,255,255,.08); font-size: 14px; font-weight: 600; }
+.live-pill i { width: 8px; height: 8px; border-radius: 50%; background: var(--live); animation: blink 1.4s infinite; }
+@keyframes blink { 50% { opacity: .25; } }
+.hero h1 { margin: 22px 0 18px; font-size: clamp(36px, 5.6vw, 60px); line-height: 1.2; letter-spacing: -1.6px; }
+.hero h1 span { color: #9fb8ff; }
+.hero p { margin: 0 0 34px; font-size: 18px; color: #c3cde2; max-width: 540px; }
+.hero .actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.stage { position: relative; display: flex; justify-content: center; }
+.phone { position: relative; width: 260px; aspect-ratio: 9 / 18.5; border-radius: 38px; padding: 10px; background: #060c1b;
+         box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 0 0 1px rgba(255,255,255,.08); }
+.screen { position: relative; height: 100%; border-radius: 30px; overflow: hidden; padding: 16px 14px;
+          background: linear-gradient(160deg, #2a3f7a 0%, #16224a 45%, #3a1f45 100%); display: flex; flex-direction: column; }
+.screen-top { display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 700; }
+.live-tag { display: inline-flex; align-items: center; gap: 5px; padding: 3px 8px; border-radius: 6px; background: var(--live); }
+.live-tag i { width: 5px; height: 5px; border-radius: 50%; background: #fff; }
+.screen-top span:last-child { padding: 3px 8px; border-radius: 6px; background: rgba(0,0,0,.3); }
+.mic { margin: 38px auto 0; width: 84px; height: 84px; border-radius: 50%; display: grid; place-items: center;
+       background: rgba(255,255,255,.1); box-shadow: 0 0 0 12px rgba(255,255,255,.04); }
+.chat { margin-top: auto; display: flex; flex-direction: column; gap: 6px; font-size: 11.5px; }
+.chat div { align-self: flex-start; max-width: 90%; padding: 6px 10px; border-radius: 12px; background: rgba(0,0,0,.32); }
+.chat b { color: #ffd27a; font-weight: 600; margin-right: 4px; }
+.product { margin-top: 10px; display: flex; gap: 8px; align-items: center; padding: 8px; border-radius: 12px; background: #fff; color: var(--ink); font-size: 11px; }
+.product i { width: 30px; height: 30px; border-radius: 8px; background: var(--blue-soft); flex: none; }
+.float { position: absolute; padding: 10px 14px; border-radius: 14px; background: #fff; color: var(--ink); font-size: 13px; font-weight: 600;
+         box-shadow: 0 12px 30px rgba(0,0,0,.25); white-space: nowrap; }
+.float small { display: block; font-weight: 500; color: var(--muted); font-size: 11px; }
+.f1 { left: -4%; top: 22%; }
+.f2 { right: -2%; bottom: 20%; }
+
+/* 공통 섹션 */
+section { padding: 96px 0; }
+section.soft { background: var(--bg-soft); }
+.sec-head { margin-bottom: 40px; }
+.sec-head h2 { margin: 10px 0 10px; font-size: clamp(28px, 3.8vw, 40px); line-height: 1.3; letter-spacing: -.9px; color: var(--navy); }
+.sec-head p { margin: 0; color: var(--muted); font-size: 17px; }
+.label { display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 13px; font-weight: 700; background: var(--blue-soft); color: var(--navy-2); }
+
+/* 벤토 그리드 */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.tile { border-radius: 24px; padding: 30px; background: var(--bg-soft); position: relative; overflow: hidden; }
+.tile h3 { margin: 0 0 10px; font-size: 22px; letter-spacing: -.4px; color: var(--navy); }
+.tile p { margin: 0; color: var(--muted); font-size: 15px; }
+.tile .ico { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; margin-bottom: 22px; background: #fff; }
+.t1 { grid-column: span 2; }
+.t2 { grid-column: span 2; }
+.t3 { grid-column: span 2; }
+.t4 { grid-column: span 6; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; background: var(--navy); }
+.t4 h3 { color: #fff; font-size: 26px; }
+.t4 p { color: #c3cde2; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tags span { padding: 8px 14px; border-radius: 99px; background: rgba(255,255,255,.08); color: #fff; font-size: 14px; }
+.note { margin-top: 16px; font-size: 13px; color: var(--muted); }
+
+/* 과정 카드 */
+.courses { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.course { display: flex; flex-direction: column; padding: 30px; border-radius: 24px; background: #fff; border: 1px solid var(--line);
+          transition: transform .2s, box-shadow .2s; }
+.course:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(15,29,61,.08); }
+.course .top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.course .dur { font-size: 15px; font-weight: 700; color: var(--live); }
+.course .tag { padding: 4px 10px; border-radius: 8px; font-size: 12px; font-weight: 600; background: #fff5e6; color: #a05f00; }
+.course h3 { margin: 0 0 4px; font-size: 26px; letter-spacing: -.6px; color: var(--navy); }
+.course > p { margin: 0; color: var(--muted); }
+.course ul { margin: 22px 0 26px; padding: 0; list-style: none; font-size: 14.5px; }
+.course li { display: flex; gap: 10px; padding: 8px 0; border-top: 1px solid var(--line); }
+.course li b { flex: none; width: 76px; color: var(--muted); font-weight: 500; }
+.course .btn { margin-top: auto; }
+
+/* 강사 분야 */
+.crew { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+.crew div { padding: 22px 18px; border-radius: 20px; background: #fff; border: 1px solid var(--line); }
+.crew .av { width: 48px; height: 48px; border-radius: 50%; margin-bottom: 14px; display: grid; place-items: center;
+            background: var(--blue-soft); color: var(--navy-2); font-weight: 800; }
+.crew b { display: block; color: var(--navy); }
+.crew span { font-size: 13.5px; color: var(--muted); }
+
+/* 교육 흐름 */
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.step { position: relative; padding: 28px 24px; border-radius: 22px; background: #fff; border: 1px solid var(--line); }
+.step em { font-style: normal; display: inline-grid; place-items: center; width: 34px; height: 34px; border-radius: 10px;
+           background: var(--navy); color: #fff; font-weight: 700; font-size: 14px; }
+.step h3 { margin: 16px 0 6px; font-size: 19px; color: var(--navy); }
+.step p { margin: 0; font-size: 14.5px; color: var(--muted); }
+
+/* 진로 연계 */
+.career { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; padding: 48px; border-radius: 28px;
+          background: linear-gradient(135deg, var(--blue-soft), var(--live-soft)); }
+.career h2 { margin: 10px 0 12px; font-size: clamp(26px, 3.4vw, 36px); color: var(--navy); letter-spacing: -.8px; }
+.career p { margin: 0; color: var(--muted); }
+.flow { display: flex; flex-direction: column; gap: 10px; }
+.flow div { display: flex; align-items: center; gap: 14px; padding: 16px 20px; border-radius: 16px; background: #fff; font-weight: 600; color: var(--navy); }
+.flow i { font-style: normal; font-size: 13px; color: var(--muted); font-weight: 500; margin-left: auto; }
+
+.empty { padding: 40px; text-align: center; border-radius: 22px; background: #fff; border: 1px dashed #cdd4e1; color: var(--muted); }
+
+/* 상담 */
+.contact { display: grid; grid-template-columns: .85fr 1.15fr; gap: 48px; align-items: start; }
+.contact h2 { margin: 10px 0 12px; font-size: clamp(28px, 3.8vw, 40px); color: var(--navy); letter-spacing: -.9px; }
+.contact aside p { color: var(--muted); }
+.side-card { margin-top: 24px; padding: 20px; border-radius: 18px; background: var(--bg-soft); font-size: 14.5px; }
+.side-card b { color: var(--navy); }
+form { padding: 32px; border-radius: 24px; background: #fff; border: 1px solid var(--line); box-shadow: 0 16px 50px rgba(15,29,61,.06); }
+.field { margin-bottom: 16px; }
+.field label { display: block; margin-bottom: 6px; font-size: 14px; font-weight: 600; }
+.field input, .field select, .field textarea { width: 100%; padding: 14px; font: inherit; font-size: 15px;
+       border: 1px solid #d3d9e4; border-radius: 12px; background: #fff; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: 2px solid var(--navy-2); border-color: transparent; }
+.field textarea { min-height: 100px; resize: vertical; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.pills label { margin: 0; }
+.pills input { position: absolute; opacity: 0; }
+.pills span { display: inline-block; padding: 10px 16px; border-radius: 99px; border: 1px solid #d3d9e4; font-size: 14px; font-weight: 500; cursor: pointer; }
+.pills input:checked + span { background: var(--navy); border-color: var(--navy); color: #fff; }
+.pills input:focus-visible + span { outline: 2px solid var(--navy-2); outline-offset: 2px; }
+.row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.agree { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0; font-size: 14px; color: var(--muted); }
+.agree input { margin-top: 4px; }
+.req { color: var(--live); }
+.msg { display: none; margin-top: 14px; padding: 12px; border-radius: 12px; background: var(--blue-soft); color: var(--navy); font-size: 14px; }
+
+footer { padding: 44px 0 110px; background: var(--navy); color: #aeb9d0; font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+footer b { color: #fff; }
+
+/* 모바일 하단 고정 상담 버튼 */
+.sticky-cta { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: none; padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+              background: rgba(255,255,255,.96); box-shadow: 0 -1px 0 var(--line); backdrop-filter: blur(8px); }
+.sticky-cta .btn { width: 100%; }
+
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.show { opacity: 1; transform: none; }
+
+@media (max-width: 960px) {
+    nav, header .btn { display: none; }
+    .hero .wrap, .career, .contact { grid-template-columns: 1fr; }
+    .stage { margin-top: 12px; }
+    .t1, .t2, .t3 { grid-column: span 6; }
+    .t4 { grid-template-columns: 1fr; }
+    .courses { grid-template-columns: 1fr; }
+    .crew { grid-template-columns: 1fr 1fr; }
+    .steps { grid-template-columns: 1fr 1fr; }
+    section { padding: 68px 0; }
+    .hero { padding: 48px 0 72px; }
+    .career { padding: 32px 24px; }
+    .sticky-cta { display: block; }
+}
+@media (max-width: 480px) {
+    .steps, .row2 { grid-template-columns: 1fr; }
+    .hero .actions .btn { flex: 1; }
+    .f1 { left: 0; }
+    .f2 { right: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .live-pill i { animation: none; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .course { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="mock-bar"><div class="wrap">
+    디자인 시안 비교 <a href="index.html">목록</a> <a href="a.html">A 신뢰형</a> <a href="b.html">B 방송형</a> <a class="on" href="c.html">C 하이브리드</a>
+</div></div>
+
+<header id="top"><div class="wrap">
+    <a class="logo" href="#"><i></i>KBC아카데미</a>
+    <nav>
+        <a href="#about">아카데미</a><a href="#courses">교육과정</a><a href="#career">진로 연계</a><a href="#news">소식</a><a href="#contact">상담 문의</a>
+    </nav>
+    <a class="btn btn-live btn-sm" href="#contact">사전 상담 신청</a>
+</div></header>
+
+<main>
+<section class="hero"><div class="wrap">
+    <div>
+        <span class="live-pill"><i></i>2026년 10월 시범 개강 목표</span>
+        <h1>방송 진행을 배우고,<br><span>실습으로 완성합니다</span></h1>
+        <p>개인방송·커머스방송·협업형 라이브 진행을 위한 댄스, 보컬, 화술, 촬영, 편집, SNS 실습</p>
+        <div class="actions">
+            <a class="btn btn-live" href="#contact">사전 상담 신청</a>
+            <a class="btn btn-white" href="#courses">과정 살펴보기</a>
+        </div>
+    </div>
+    <div class="stage" aria-hidden="true">
+        <div class="phone"><div class="screen">
+            <div class="screen-top"><span class="live-tag"><i></i>LIVE</span><span>모의 라이브 실습</span></div>
+            <div class="mic">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3M8 21h8"/></svg>
+            </div>
+            <div class="chat">
+                <div><b>진행</b>3분 자기소개 시작합니다</div>
+                <div><b>피드백</b>카메라 시선 좋아요</div>
+                <div><b>실습</b>다음은 상품 소개 파트</div>
+            </div>
+            <div class="product"><i></i><div><b>커머스 실습</b><br>상품 특성·가격·배송 안내</div></div>
+        </div></div>
+        <div class="float f1">녹화 피드백<small>조별 송출 후 바로 점검</small></div>
+        <div class="float f2">수료 포트폴리오<small>영상 산출물로 완성</small></div>
+    </div>
+</div></section>
+
+<section id="about"><div class="wrap">
+    <div class="sec-head reveal">
+        <span class="label">아카데미</span>
+        <h2>세 가지 방송 분야를<br>카메라 앞에서 실습합니다</h2>
+        <p>춤과 노래뿐 아니라 진행력과 상품 설명 능력을 가진 분도 자신에게 맞는 분야를 찾을 수 있습니다.</p>
+    </div>
+    <div class="bento reveal">
+        <div class="tile t1">
+            <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b2f5e" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+            <h3>개인방송</h3><p>콘셉트 기획부터 출연, 진행, 채팅 소통까지 혼자서 방송을 운영하는 역량</p>
+        </div>
+        <div class="tile t2">
+            <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b2f5e" stroke-width="2" stroke-linecap="round"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg></div>
+            <h3>커머스방송</h3><p>상품 특성·가격·배송·환불 안내를 정확하게 전달하는 라이브 판매 진행</p>
+        </div>
+        <div class="tile t3">
+            <div class="ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1b2f5e" stroke-width="2" stroke-linecap="round"><circle cx="8" cy="9" r="3"/><circle cx="17" cy="9" r="3"/><path d="M2 20a6 6 0 0 1 12 0M11 20a6 6 0 0 1 11 0"/></svg></div>
+            <h3>협업형 라이브</h3><p>여러 출연자가 함께하는 방송의 합의와 안전한 진행 규칙, 협업 진행</p>
+        </div>
+        <div class="tile t4">
+            <div>
+                <h3>댄스·보컬·메이크업을<br>화면 표현으로 연결합니다</h3>
+                <p>무대 표현, 발성과 즉흥 멘트, 조명별 메이크업까지 카메라 앞에서 어떻게 보이는지를 기준으로 배웁니다.</p>
+            </div>
+            <div class="tags"><span>댄스·표현</span><span>보컬·화술</span><span>메이크업·스타일</span><span>촬영·편집</span><span>SNS 마케팅</span><span>저작권·광고 표시</span></div>
+        </div>
+    </div>
+    <p class="note">플랫폼별 기능과 실제 방송 가능 여부는 개인 계정 자격·정책에 따릅니다.</p>
+</div></section>
+
+<section id="courses" class="soft"><div class="wrap">
+    <div class="sec-head reveal">
+        <span class="label">교육과정</span>
+        <h2>목표에 맞게 고르는 3가지 과정</h2>
+        <p>현재 커리큘럼 제안 단계이며, 세부 시간표와 교습비는 확정 후 안내합니다.</p>
+    </div>
+    <div class="courses reveal">
+        <article class="course">
+            <div class="top"><span class="dur">6주</span><span class="tag">시간표·교습비 확정 전</span></div>
+            <h3>속성 6주</h3><p>모의 라이브·숏폼</p>
+            <ul><li><b>대상</b>기초 경험자·전환 희망자</li><li><b>수업</b>주 2회 (제안)</li><li><b>산출물</b>자기소개 영상, 20분 모의 라이브, 숏폼 2편</li></ul>
+            <a class="btn btn-line" href="#contact">이 과정 상담하기</a>
+        </article>
+        <article class="course">
+            <div class="top"><span class="dur">3개월</span><span class="tag">시간표·교습비 확정 전</span></div>
+            <h3>기본 3개월</h3><p>분야별 기초와 포트폴리오</p>
+            <ul><li><b>대상</b>입문자</li><li><b>수업</b>주 2~3회 (제안)</li><li><b>산출물</b>포트폴리오</li></ul>
+            <a class="btn btn-line" href="#contact">이 과정 상담하기</a>
+        </article>
+        <article class="course">
+            <div class="top"><span class="dur">6개월</span><span class="tag">시간표·교습비 확정 전</span></div>
+            <h3>심화 6개월</h3><p>특화 실습·성과 분석</p>
+            <ul><li><b>대상</b>전업·심화 희망자</li><li><b>수업</b>주 2~3회 (제안)</li><li><b>산출물</b>브랜드 제안서, 성과 분석</li></ul>
+            <a class="btn btn-line" href="#contact">이 과정 상담하기</a>
+        </article>
+    </div>
+</div></section>
+
+<section><div class="wrap">
+    <div class="sec-head reveal">
+        <span class="label">강사진</span>
+        <h2>분야별 현장 강사진</h2>
+        <p>강사 명단과 경력은 협업 확정 후 증빙을 확인해 공개합니다.</p>
+    </div>
+    <div class="crew reveal">
+        <div><span class="av">댄</span><b>댄스·표현</b><span>카메라 동선, 안무, 리듬, 무대 표현</span></div>
+        <div><span class="av">보</span><b>보컬·화술</b><span>발성, 호흡, 노래, 즉흥 멘트</span></div>
+        <div><span class="av">메</span><b>메이크업·스타일</b><span>조명별 메이크업, 화면 이미지 설계</span></div>
+        <div><span class="av">제</span><b>방송 제작</b><span>라이브 송출, 화면 전환, 편집</span></div>
+        <div><span class="av">S</span><b>SNS·커머스</b><span>콘텐츠 기획, 지표 분석, 상품 시연</span></div>
+    </div>
+</div></section>
+
+<section class="soft"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">교육 흐름</span><h2>보고 듣는 수업이 아니라<br>직접 송출하는 수업</h2></div>
+    <div class="steps reveal">
+        <div class="step"><em>1</em><h3>방송 콘셉트 설정</h3><p>나에게 맞는 방송 분야와 캐릭터 찾기</p></div>
+        <div class="step"><em>2</em><h3>카메라 앞 실습</h3><p>소규모 조별 송출 중심 실습</p></div>
+        <div class="step"><em>3</em><h3>녹화 피드백</h3><p>녹화 영상으로 진행과 표현 점검</p></div>
+        <div class="step"><em>4</em><h3>포트폴리오 제작</h3><p>수료 영상과 산출물 완성</p></div>
+    </div>
+</div></section>
+
+<section id="career"><div class="wrap">
+    <div class="career reveal">
+        <div>
+            <span class="label">진로 연계</span>
+            <h2>수료 후,<br>현장으로 이어지는 길</h2>
+            <p>커머스·라이브 방송 운영업체와 면접 연계 협약을 추진 중입니다. 제휴 확정 후 참여 조건을 안내합니다.</p>
+        </div>
+        <div class="flow">
+            <div>포트폴리오 제출<i>수료 산출물</i></div>
+            <div>업체 설명회<i>제휴 확정 후</i></div>
+            <div>면접·현장 테스트<i>업체별 심사</i></div>
+        </div>
+    </div>
+</div></section>
+
+<section id="news" class="soft"><div class="wrap">
+    <div class="sec-head reveal"><span class="label">소식</span><h2>설명회·공지</h2></div>
+    <div class="empty">설명회 일정은 확정 후 안내합니다.</div>
+</div></section>
+
+<section id="contact"><div class="wrap contact">
+    <aside class="reveal">
+        <span class="label">상담 문의</span>
+        <h2>사전 상담 신청</h2>
+        <p>남겨주신 연락처로 상담 담당자가 연락드립니다.</p>
+        <div class="side-card"><b>교육 공간·강사·채용 협력</b><br>기관 협력은 별도 제안서로 받습니다.<br><a href="#contact" style="text-decoration:underline">협력 제안하기 →</a></div>
+    </aside>
+    <form onsubmit="return mockSubmit(this)">
+        <div class="row2">
+            <div class="field"><label for="c-name">이름 <span class="req">*</span></label><input id="c-name" required autocomplete="name"></div>
+            <div class="field"><label for="c-phone">연락처 <span class="req">*</span></label><input id="c-phone" type="tel" required placeholder="010-0000-0000" autocomplete="tel"></div>
+        </div>
+        <div class="field">
+            <label>관심 과정</label>
+            <div class="pills">
+                <label><input type="radio" name="course" checked><span>아직 모르겠어요</span></label>
+                <label><input type="radio" name="course"><span>속성 6주</span></label>
+                <label><input type="radio" name="course"><span>기본 3개월</span></label>
+                <label><input type="radio" name="course"><span>심화 6개월</span></label>
+            </div>
+        </div>
+        <div class="field"><label for="c-time">희망 연락시간</label><input id="c-time" placeholder="예) 평일 오후 2시 이후"></div>
+        <div class="field"><label for="c-msg">문의내용</label><textarea id="c-msg" placeholder="궁금한 점을 자유롭게 적어주세요"></textarea></div>
+        <label class="agree"><input type="checkbox" required> <span>[필수] 개인정보 수집·이용에 동의합니다. <a href="#" style="text-decoration:underline">내용 보기</a></span></label>
+        <label class="agree"><input type="checkbox"> <span>[선택] 설명회·모집 안내 등 홍보성 연락을 받겠습니다.</span></label>
+        <button class="btn btn-navy" style="width:100%;margin-top:8px">상담 신청하기</button>
+        <p class="msg">시안 화면에서는 전송되지 않습니다.</p>
+    </form>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+    <div><b>KBC아카데미</b><br>KBC아카데미 개원 준비 중 / 강남 협업 교육장 검토 중</div>
+    <div>운영 주체·등록 정보: 준비 중<br><a href="#" style="text-decoration:underline">개인정보 처리방침</a> · © KBC아카데미</div>
+</div></footer>
+
+<div class="sticky-cta"><a class="btn btn-live" href="#contact">사전 상담 신청</a></div>
+
+<script>
+function mockSubmit(form) {
+    form.querySelector('.msg').style.display = 'block';
+    return false;
+}
+const header = document.getElementById('top');
+const hero = document.querySelector('.hero');
+addEventListener('scroll', () => header.classList.toggle('scrolled', scrollY > hero.offsetHeight - 64), { passive: true });
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); } }), { threshold: .12 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+</body>
+</html>
