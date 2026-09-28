@@ -1,0 +1,43 @@
+/*
+ * 디자인 설정값 (색, 글꼴, 모서리)
+ * 전체 분위기를 바꿀 때는 이 파일의 값만 수정한다.
+ * 현재: C 하이브리드 (첫 화면 남색 + 본문 밝은 배경)
+ */
+:root {
+    /* 브랜드 색 */
+    --c-navy: #0f1d3d;
+    --c-navy-2: #1b2f5e;
+    --c-live: #ff3d57;
+    --c-live-hover: #ec2f49;
+    --c-accent-text: #9fb8ff;      /* 첫 화면 강조 글자 */
+
+    /* 본문 */
+    --c-ink: #151c2b;
+    --c-muted: #5e6a7e;
+    --c-line: #e4e8f0;
+    --c-input-line: #d3d9e4;
+    --c-bg: #ffffff;
+    --c-bg-soft: #f4f6fa;
+    --c-live-soft: #fff0f2;
+    --c-blue-soft: #edf2ff;
+    --c-warn-bg: #fff5e6;
+    --c-warn-text: #a05f00;
+
+    /* 첫 화면(히어로) */
+    --c-hero-bg: var(--c-navy);
+    --c-hero-text: #ffffff;
+    --c-hero-sub: #c3cde2;
+    --c-hero-glow: rgba(91, 130, 255, .35);
+
+    /* 글꼴 */
+    --font: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, "Malgun Gothic", sans-serif;
+
+    /* 모서리 */
+    --r-sm: 10px;
+    --r-md: 14px;
+    --r-lg: 24px;
+
+    /* 레이아웃 */
+    --w-max: 1160px;
+    --header-h: 64px;
+}

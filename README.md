@@ -36,6 +36,37 @@ DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 - admin   : kbc_admin   (조회/등록/수정/삭제)
 - migrate : kbc_migrate (테이블 생성/변경, 마이그레이션 실행 시에만 사용)
 
+## 공개 홈페이지 화면 구조 (user)
+
+```
+user/app/Views/
+├─ layouts/main.php     공통 틀 (헤더, 푸터, 모바일 하단 상담 버튼)
+└─ home/
+   ├─ index.php         섹션 순서
+   ├─ hero.php          첫 화면
+   ├─ fields.php        방송 분야
+   ├─ courses.php       교육과정 (courses)
+   ├─ crew.php          강사진 (instructors)
+   ├─ steps.php         교육 흐름
+   ├─ career.php        진로 연계
+   ├─ news.php          설명회·공지 (events, notices)
+   └─ contact.php       상담 신청
+
+user/public/assets/
+├─ css/tokens.css       색·글꼴·모서리 설정값 (분위기 변경 시 이 파일만 수정)
+├─ css/site.css         화면 스타일
+├─ js/site.js           헤더 전환, 스크롤 효과
+└─ fonts/pretendard/    Pretendard 글꼴 (SIL OFL, LICENSE.txt 포함)
+```
+
+화면 표시 규칙
+- 과정 `is_confirmed = 0` 이면 "시간표·교습비 확정 전" 표시, 교습비 숨김
+- 강사 `consent_at` 이 없으면 실명·사진·경력 숨김
+- 사이트 설정 `operator_name` 이 비어 있으면 푸터에 "준비 중" 표시, 연락처는 값이 있을 때만 표시
+- 공지는 게시일이 지난 것만, 설명회는 앞으로 열릴 것만 표시
+
+디자인 시안 원본은 `docs/mockup/`.
+
 ## DB 마이그레이션
 
 마이그레이션은 admin 프로젝트에서만 관리한다.
