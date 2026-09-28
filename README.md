@@ -67,6 +67,24 @@ user/public/assets/
 
 디자인 시안 원본은 `docs/mockup/`.
 
+## 문의 접수 (user)
+
+| 주소 | 내용 |
+|---|---|
+| POST /consult | 교육 상담 신청 (홈 하단 폼) |
+| GET /consult/done | 상담 접수 완료 (접수번호는 접수 직후 한 번만 표시) |
+| GET, POST /partner | 기관 협력 제안 (교육장 / 강사 / 채용) |
+| GET /partner/done | 협력 제안 접수 완료 |
+
+처리 순서: CSRF → 봇 검사 → 입력값 검사 → IP 제한 → 연락처 중복 → 접수번호 발급·저장 → 완료 화면
+
+- 접수번호: `C`(상담) / `P`(협력) + 날짜 + 5자리 (`app/Libraries/ReceiptNumber.php`)
+- 스팸 방지 (`app/Libraries/SpamGuard.php`)
+  - 숨김 칸(website)이 채워지거나 폼을 연 지 3초 안에 제출하면 봇으로 보고 저장하지 않음 (완료 화면은 동일하게 표시)
+  - 같은 IP 10분에 3회, 같은 연락처 10분 내 재접수 제한 (writable/cache 에 기록, 연락처는 해시로 저장)
+- 유입 경로: utm 값 또는 외부 유입 사이트 주소를 `source` 에 기록 (`assets/js/site.js`)
+- 연락처는 `010-1234-5678` 형식으로 통일해 저장
+
 ## DB 마이그레이션
 
 마이그레이션은 admin 프로젝트에서만 관리한다.
