@@ -5,7 +5,18 @@
  * @var string $title
  */
 $current = service('uri')->getSegment(1);
-$menu    = ['' => '대시보드', 'consults' => '상담 문의', 'partners' => '협력 제안', 'notifications' => '알림 기록', 'account' => '내 계정'];
+$menu    = [
+    ''              => '대시보드',
+    'consults'      => '상담 문의',
+    'partners'      => '협력 제안',
+    'courses'       => '교육과정',
+    'notices'       => '공지',
+    'events'        => '설명회',
+    'faqs'          => 'FAQ',
+    'settings'      => '사이트 설정',
+    'notifications' => '알림 기록',
+    'account'       => '내 계정',
+];
 ?>
 <!DOCTYPE html>
 <html lang="ko">

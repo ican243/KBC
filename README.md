@@ -148,6 +148,21 @@ php spark db:seed InitialContentSeeder
 | inquiry_memos | 문의 메모·상태 이력 |
 | notification_logs | 알림 발송 기록 |
 
+## 홈페이지 콘텐츠 관리 (admin)
+
+| 주소 | 내용 |
+|---|---|
+| /courses | 교육과정 (확정 여부·교습비, 순서, 공개) — 상담 기록이 참조하므로 삭제 불가, 비공개만 |
+| /notices | 공지 (게시일이 지나야 홈페이지에 표시 → 예약 게시) |
+| /events | 설명회 일정 (지난 일정은 홈페이지에서 자동 제외) |
+| /faqs | 자주 묻는 질문 (분류, 순서) |
+| /settings | 사이트 설정 18개 (안내 문구, 운영 정보, 개인정보, 알림 이메일) |
+
+- 공통 처리: `app/Controllers/ContentController.php` (목록·등록·수정·공개 전환·순서·삭제), 메뉴별 컨트롤러는 입력 규칙만 정의
+- 공지·FAQ 내용은 일반 글자만 저장 (HTML 에디터 없음)
+- 콘텐츠·설정 변경은 `writable/logs/audit-날짜.log` 에 기록
+- 검사 오류 문구: `app/Language/ko/Validation.php` (관리자 `.env` 의 `app.defaultLocale = 'ko'`)
+
 ## 관리자 로그인 / 2단계 인증 (admin)
 
 1. 아이디·비밀번호 → 2. OTP 앱(Google Authenticator 등) 6자리 또는 복구 코드

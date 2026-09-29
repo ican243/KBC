@@ -31,3 +31,44 @@ if (! function_exists('dt')) {
         return $value ? date($format, strtotime($value)) : '-';
     }
 }
+
+if (! function_exists('field_value')) {
+    /**
+     * 폼 값: 저장 실패로 돌아왔으면 입력했던 값, 아니면 DB 값
+     */
+    function field_value(array $row, string $key): string
+    {
+        return (string) old($key, $row[$key] ?? '');
+    }
+}
+
+if (! function_exists('field_error')) {
+    function field_error(string $key): string
+    {
+        $errors = session('errors');
+
+        return is_array($errors) && isset($errors[$key])
+            ? '<p class="field-error">' . esc($errors[$key]) . '</p>'
+            : '';
+    }
+}
+
+if (! function_exists('datetime_local')) {
+    /**
+     * DB 날짜(2026-10-01 14:00:00) → 입력칸 형식(2026-10-01T14:00)
+     */
+    function datetime_local(?string $value): string
+    {
+        return $value ? date('Y-m-d\TH:i', strtotime($value)) : '';
+    }
+}
+
+if (! function_exists('public_url')) {
+    /**
+     * 공개 홈페이지 주소 (.env site.publicURL)
+     */
+    function public_url(string $path = ''): string
+    {
+        return rtrim((string) env('site.publicURL', ''), '/') . '/' . ltrim($path, '/');
+    }
+}

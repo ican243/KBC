@@ -34,6 +34,22 @@ $routes->group('', ['filter' => 'adminauth'], static function ($routes) {
     // 알림 발송 기록
     $routes->get('notifications', 'Notifications::index');
 
+    // 홈페이지 콘텐츠 (같은 구조)
+    foreach (['courses' => 'Courses', 'notices' => 'Notices', 'events' => 'Events', 'faqs' => 'Faqs'] as $path => $controller) {
+        $routes->get($path, "{$controller}::index");
+        $routes->get("{$path}/new", "{$controller}::create");
+        $routes->post($path, "{$controller}::store");
+        $routes->post("{$path}/sort", "{$controller}::sort");
+        $routes->get("{$path}/(:num)/edit", "{$controller}::edit/$1");
+        $routes->post("{$path}/(:num)", "{$controller}::update/$1");
+        $routes->post("{$path}/(:num)/toggle", "{$controller}::toggle/$1");
+        $routes->post("{$path}/(:num)/delete", "{$controller}::delete/$1");
+    }
+
+    // 사이트 설정
+    $routes->get('settings', 'Settings::index');
+    $routes->post('settings', 'Settings::save');
+
     // 내 계정
     $routes->get('account', 'Account::index');
     $routes->get('account/password', 'Account::password');
