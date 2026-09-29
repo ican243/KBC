@@ -24,6 +24,7 @@ $rows = [
     <?php if ($courses === []): ?>
         <div class="empty">교육과정은 확정 후 안내합니다.</div>
     <?php else: ?>
+    <h2 class="sr-only">과정 목록</h2>
     <div class="courses">
         <?php foreach ($courses as $c): ?>
         <article class="course">
