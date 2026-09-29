@@ -114,6 +114,8 @@ user/public/assets/
   - 같은 IP 10분에 3회, 같은 연락처 10분 내 재접수 제한 (writable/cache 에 기록, 연락처는 해시로 저장)
 - 유입 경로: utm 값 또는 외부 유입 사이트 주소를 `source` 에 기록 (`assets/js/site.js`)
 - 연락처는 `010-1234-5678` 형식으로 통일해 저장
+- 신청한 화면(`entry_page`: home / contact / courses/주소이름)을 함께 저장 → 통계의 과정 페이지 전환
+- 조회수: `app/Filters/PageView.php` 가 정상 표시된 공개 HTML 페이지(GET)만 +1. 검색엔진·미리보기 로봇, 404, POST 제외. 쿠키 미사용이라 방문자 수가 아닌 조회수
 
 ## 운영자 메일 알림 (user)
 
@@ -138,6 +140,7 @@ user/public/assets/
 | /consults/{id}, /partners/{id} | 상세 + 처리(상태·담당자·메모) + 처리 이력 + 삭제 처리 |
 | /consults/export, /partners/export | 현재 필터 결과 CSV (UTF-8 BOM, 엑셀 수식 실행 방지) |
 | /notifications | 메일 알림 발송 기록 |
+| /stats | 통계 (상담·협력 접수, 상담완료 비율, 과정 페이지 → 상담 전환, 날짜별·과정별·유입 경로별·신청 화면별, 많이 본 페이지) |
 
 - 상태: 신규(new) / 연락(contacted) / 상담완료(done) / 보류(hold) — `app/Libraries/InquiryStatus.php`
 - 처리할 때마다 `inquiry_memos` 에 이력 기록 (변경 전·후 상태, 담당자, 메모)
@@ -198,6 +201,7 @@ php spark db:seed InitialContentSeeder
 | partner_inquiries | 기관 협력 제안 |
 | inquiry_memos | 문의 메모·상태 이력 |
 | notification_logs | 알림 발송 기록 |
+| page_views | 공개 페이지 조회수 (날짜·페이지·숫자만, 개인정보 없음) |
 
 ## 홈페이지 콘텐츠 관리 (admin)
 

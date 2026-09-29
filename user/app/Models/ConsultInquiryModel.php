@@ -25,6 +25,7 @@ class ConsultInquiryModel extends Model
         'agree_marketing',
         'agree_marketing_at',
         'source',
+        'entry_page',
         'ip',
         'user_agent',
     ];

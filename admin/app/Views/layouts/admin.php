@@ -9,6 +9,7 @@ $menu    = [
     ''              => '대시보드',
     'consults'      => '상담 문의',
     'partners'      => '협력 제안',
+    'stats'         => '통계',
     'courses'       => '교육과정',
     'instructors'   => '강사진',
     'notices'       => '공지',

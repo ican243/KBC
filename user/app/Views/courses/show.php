@@ -45,7 +45,7 @@ $items = [
     </div>
     <?php endif ?>
 
-    <a class="btn btn-live btn-block" href="<?= site_url('contact') . '?course=' . (int) $course['id'] ?>">이 과정 상담 신청하기</a>
+    <a class="btn btn-live btn-block" href="<?= site_url('contact') . '?course=' . (int) $course['id'] . '&amp;from=course' ?>">이 과정 상담 신청하기</a>
 
     <?php if ($others !== []): ?>
     <div class="other-links">

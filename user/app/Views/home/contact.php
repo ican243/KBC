@@ -17,5 +17,5 @@
         </div>
     </aside>
 
-    <?= view('partials/consult_form', ['returnTo' => 'home', 'selectedCourse' => '']) ?>
+    <?= view('partials/consult_form', ['returnTo' => 'home', 'selectedCourse' => '', 'entryPage' => 'home']) ?>
 </div></section>

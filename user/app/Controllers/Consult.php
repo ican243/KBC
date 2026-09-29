@@ -18,7 +18,7 @@ class Consult extends InquiryController
 
     public function submit()
     {
-        $post = $this->postValues(['name', 'phone', 'course_id', 'contact_time', 'message', 'agree_privacy', 'agree_marketing']);
+        $post = $this->postValues(['name', 'phone', 'course_id', 'contact_time', 'message', 'agree_privacy', 'agree_marketing', 'entry_page']);
 
         // 관심 과정은 현재 공개 중인 과정만 허용
         $courseIds = implode(',', array_column((new CourseModel())->getPublished(), 'id'));
@@ -61,6 +61,8 @@ class Consult extends InquiryController
                 'message'            => $post['message'] !== '' ? $post['message'] : null,
                 'agree_marketing'    => $marketing ? 1 : 0,
                 'agree_marketing_at' => $marketing ? $now : null,
+                // 신청한 화면 (통계용). 정해진 형식이 아니면 기록하지 않음
+                'entry_page'         => preg_match('#^(home|contact|courses/[a-z0-9_-]{1,50})$#', $post['entry_page']) ? $post['entry_page'] : null,
             ];
         });
     }

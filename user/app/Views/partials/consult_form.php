@@ -5,6 +5,7 @@
  * @var array  $courses
  * @var string $selectedCourse 미리 선택할 과정 id (없으면 '')
  * @var string $returnTo       오류 시 돌아갈 곳 home | contact
+ * @var string $entryPage      신청한 화면 (통계용) home | contact | courses/주소이름
  */
 $oldCourse = form_old('course_id', $selectedCourse ?? '');
 $field     = static fn (string $key): string => form_error($key) ? ' has-error' : '';
@@ -12,6 +13,7 @@ $field     = static fn (string $key): string => form_error($key) ? ' has-error' 
 <form class="form-card" method="post" action="<?= site_url('consult') ?>" novalidate>
     <?= $this->include('partials/form_guard') ?>
     <input type="hidden" name="return_to" value="<?= esc($returnTo ?? 'home', 'attr') ?>">
+    <input type="hidden" name="entry_page" value="<?= esc($entryPage ?? ($returnTo ?? 'home'), 'attr') ?>">
 
     <div class="row2">
         <div class="field<?= $field('name') ?>">

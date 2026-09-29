@@ -4,6 +4,7 @@
  *
  * @var array  $courses
  * @var string $selectedCourse
+ * @var string $entryPage
  */
 ?>
 <?= $this->extend('layouts/main') ?>
@@ -27,6 +28,6 @@
             <a href="<?= site_url('partner') ?>" style="text-decoration:underline">협력 제안하기 →</a>
         </div>
     </aside>
-    <?= view('partials/consult_form', ['returnTo' => 'contact', 'selectedCourse' => $selectedCourse]) ?>
+    <?= view('partials/consult_form', ['returnTo' => 'contact', 'selectedCourse' => $selectedCourse, 'entryPage' => $entryPage]) ?>
 </div></section>
 <?= $this->endSection() ?>

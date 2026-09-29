@@ -34,6 +34,9 @@ $routes->group('', ['filter' => 'adminauth'], static function ($routes) {
     // 알림 발송 기록
     $routes->get('notifications', 'Notifications::index');
 
+    // 통계
+    $routes->get('stats', 'Stats::index');
+
     // 홈페이지 콘텐츠 (같은 구조)
     foreach (['courses' => 'Courses', 'instructors' => 'Instructors', 'notices' => 'Notices', 'events' => 'Events', 'faqs' => 'Faqs'] as $path => $controller) {
         $routes->get($path, "{$controller}::index");

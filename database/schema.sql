@@ -1,6 +1,6 @@
 -- KBC아카데미 DB 구조 (데이터 제외)
 -- 원본은 admin/app/Database/Migrations 이며, 이 파일은 참고/인수인계용으로 migrate 후 생성한다.
--- 생성: 2026-09-28
+-- 생성: 2026-09-29
 
 CREATE TABLE `admins` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -11,6 +11,8 @@ CREATE TABLE `admins` (
   `failed_attempts` tinyint unsigned NOT NULL DEFAULT '0' COMMENT '연속 로그인 실패 횟수',
   `locked_until` datetime DEFAULT NULL COMMENT '이 시각까지 로그인 차단',
   `totp_secret` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '2단계 인증 키 (추후 적용)',
+  `totp_enabled_at` datetime DEFAULT NULL COMMENT '2단계 인증 설정 일시',
+  `recovery_codes` text COLLATE utf8mb4_unicode_ci COMMENT '복구 코드 해시 (JSON)',
   `last_login_at` datetime DEFAULT NULL,
   `last_login_ip` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
@@ -30,6 +32,7 @@ CREATE TABLE `consult_inquiries` (
   `agree_marketing` tinyint(1) NOT NULL DEFAULT '0' COMMENT '홍보성 연락 동의 (선택)',
   `agree_marketing_at` datetime DEFAULT NULL,
   `source` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '유입 경로',
+  `entry_page` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL COMMENT '신청한 화면 (home / contact / courses/주소이름)',
   `status` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'new' COMMENT 'new/contacted/done/hold',
   `assigned_admin_id` int unsigned DEFAULT NULL COMMENT '담당자',
   `ip` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -155,6 +158,12 @@ CREATE TABLE `notification_logs` (
   PRIMARY KEY (`id`),
   KEY `status_created_at` (`status`,`created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='알림 발송 기록';
+CREATE TABLE `page_views` (
+  `view_date` date NOT NULL COMMENT '날짜 (한국 시간)',
+  `path` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '페이지 주소 (예: /courses/basic-3m)',
+  `views` int unsigned NOT NULL DEFAULT '0' COMMENT '조회수',
+  PRIMARY KEY (`view_date`,`path`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='공개 페이지 조회수 (개인정보 없음)';
 CREATE TABLE `partner_inquiries` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
   `receipt_no` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL COMMENT '접수번호 (P+날짜-코드)',
