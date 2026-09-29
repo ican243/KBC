@@ -13,6 +13,25 @@
         onScroll();
     }
 
+    // 휴대폰 ☰ 메뉴 열고 닫기
+    var toggle = document.querySelector('.menu-toggle');
+    var mobileNav = document.getElementById('mobile-nav');
+    if (toggle && mobileNav) {
+        toggle.addEventListener('click', function () {
+            var open = toggle.getAttribute('aria-expanded') !== 'true';
+            toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            toggle.setAttribute('aria-label', open ? '메뉴 닫기' : '메뉴 열기');
+            mobileNav.hidden = !open;
+        });
+        // 같은 페이지 안 이동(#about 등) 링크를 누르면 메뉴 닫기
+        mobileNav.querySelectorAll('a').forEach(function (a) {
+            a.addEventListener('click', function () {
+                toggle.setAttribute('aria-expanded', 'false');
+                mobileNav.hidden = true;
+            });
+        });
+    }
+
     // 유입 경로: 처음 들어온 경로(광고 utm 값 또는 외부 사이트 주소)를 기억해 문의 폼에 담는다
     try {
         var params = new URLSearchParams(location.search);

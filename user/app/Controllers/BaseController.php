@@ -42,4 +42,16 @@ abstract class BaseController extends Controller
         // Preload any models, libraries, etc, here.
         // $this->session = service('session');
     }
+
+    /**
+     * 공통 틀(layouts/main)을 쓰는 화면. 헤더·푸터에 필요한 사이트 설정을 함께 넘긴다.
+     */
+    protected function render(string $view, string $title, array $data = [], string $description = ''): string
+    {
+        return view($view, $data + [
+            'title'       => $title . ' | KBC아카데미',
+            'description' => $description,
+            'settings'    => (new \App\Models\SiteSettingModel())->getMap(),
+        ]);
+    }
 }

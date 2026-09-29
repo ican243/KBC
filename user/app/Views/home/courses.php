@@ -33,9 +33,13 @@
                 <?php if ($course['outputs']): ?><li><b>산출물</b><?= esc($course['outputs']) ?></li><?php endif ?>
                 <?php if ($course['is_confirmed'] && $course['fee_text']): ?><li><b>교습비</b><?= esc($course['fee_text']) ?></li><?php endif ?>
             </ul>
-            <a class="btn btn-line" href="#contact" data-course="<?= esc($course['id'], 'attr') ?>">이 과정 상담하기</a>
+            <div class="card-actions">
+                <a class="btn btn-line" href="<?= site_url('courses/' . $course['slug']) ?>">자세히 보기</a>
+                <a class="btn btn-line" href="#contact" data-course="<?= esc($course['id'], 'attr') ?>">상담하기</a>
+            </div>
         </article>
         <?php endforeach ?>
     </div>
+    <p class="more"><a href="<?= site_url('courses') ?>">과정 한눈에 비교하기 →</a></p>
     <?php endif ?>
 </div></section>

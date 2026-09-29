@@ -12,7 +12,7 @@ class InstructorModel extends Model
 
     /**
      * 홈페이지에 노출하는 강사(분야)
-     * 게시 동의(consent_at)가 없으면 실명·사진·경력을 비운다.
+     * 게시 동의(consent_at)가 없으면 실명·사진·경력·프로필을 비운다.
      */
     public function getPublished(): array
     {
@@ -26,6 +26,7 @@ class InstructorModel extends Model
                 $row['name']       = null;
                 $row['photo_path'] = null;
                 $row['career']     = null;
+                $row['profile']    = null;
             }
         }
 

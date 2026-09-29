@@ -70,9 +70,14 @@ class Consult extends InquiryController
         return $this->showDone('상담 신청 완료');
     }
 
+    /**
+     * 오류 시 돌아갈 곳: /contact 페이지에서 보냈으면 그 페이지, 아니면 홈 하단
+     */
     protected function formUrl(): string
     {
-        return site_url('/') . '#contact';
+        return $this->request->getPost('return_to') === 'contact'
+            ? site_url('contact')
+            : site_url('/') . '#contact';
     }
 
     protected function model(): Model

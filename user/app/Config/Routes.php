@@ -16,3 +16,12 @@ $routes->get('partner/done', 'Partner::done');
 
 // 안내 페이지
 $routes->get('privacy', 'Pages::privacy');
+
+// 메뉴 페이지
+$routes->get('courses', 'Courses::index');
+$routes->get('courses/(:segment)', 'Courses::show/$1');
+$routes->get('instructors', 'Instructors::index');
+$routes->get('news', 'News::index');
+$routes->get('news/(:num)', 'News::show/$1');
+$routes->get('faq', 'Faq::index');
+$routes->get('contact', 'Contact::index');

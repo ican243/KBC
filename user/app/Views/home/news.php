@@ -35,7 +35,7 @@
             <ul>
                 <?php foreach ($notices as $notice): ?>
                 <li>
-                    <span><?= esc($notice['title']) ?></span>
+                    <a href="<?= site_url('news/' . $notice['id']) ?>"><?= esc($notice['title']) ?></a>
                     <time datetime="<?= esc($notice['published_at'], 'attr') ?>"><?= esc(date('Y.m.d', strtotime($notice['published_at']))) ?></time>
                 </li>
                 <?php endforeach ?>
@@ -43,4 +43,5 @@
             <?php endif ?>
         </div>
     </div>
+    <p class="more"><a href="<?= site_url('news') ?>">소식 전체 보기 →</a> · <a href="<?= site_url('faq') ?>">자주 묻는 질문 →</a></p>
 </div></section>

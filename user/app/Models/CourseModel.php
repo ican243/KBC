@@ -20,4 +20,12 @@ class CourseModel extends Model
             ->orderBy('id', 'ASC')
             ->findAll();
     }
+
+    /**
+     * 과정 상세 (공개 중인 과정만)
+     */
+    public function findPublishedBySlug(string $slug): ?array
+    {
+        return $this->where('slug', $slug)->where('is_published', 1)->first();
+    }
 }

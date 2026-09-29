@@ -32,5 +32,6 @@
         </div>
         <?php endforeach ?>
     </div>
+    <p class="more"><a href="<?= site_url('instructors') ?>">강사진 자세히 보기 →</a></p>
     <?php endif ?>
 </div></section>
