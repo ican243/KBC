@@ -14,9 +14,9 @@ $menuOf  = ['courses' => 'courses', 'instructors' => 'academy', 'about' => 'acad
             'news' => 'news', 'faq' => 'news', 'contact' => 'contact', 'partner' => 'contact'];
 $current = $menuOf[$segment] ?? '';
 $gnb     = [
-    'academy' => ['아카데미', site_url('/') . '#about'],
+    'academy' => ['아카데미', site_url('about')],
     'courses' => ['교육과정', site_url('courses')],
-    'career'  => ['진로 연계', site_url('/') . '#career'],
+    'career'  => ['진로 연계', site_url('career')],
     'news'    => ['소식', site_url('news')],
     'contact' => ['상담 문의', site_url('contact')],
 ];
@@ -55,10 +55,10 @@ $gnb     = [
     </button>
 </div>
     <nav id="mobile-nav" class="mobile-nav" aria-label="전체 메뉴" hidden>
-        <a href="<?= site_url('/') ?>#about">아카데미 소개</a>
+        <a href="<?= site_url('about') ?>">아카데미 소개</a>
         <a href="<?= site_url('instructors') ?>">강사진</a>
         <a href="<?= site_url('courses') ?>">교육과정</a>
-        <a href="<?= site_url('/') ?>#career">진로 연계</a>
+        <a href="<?= site_url('career') ?>">진로 연계</a>
         <a href="<?= site_url('news') ?>">공지·설명회</a>
         <a href="<?= site_url('faq') ?>">자주 묻는 질문</a>
         <a href="<?= site_url('contact') ?>">상담 문의</a>

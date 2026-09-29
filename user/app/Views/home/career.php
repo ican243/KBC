@@ -10,6 +10,7 @@
             <span class="label">진로 연계</span>
             <h2>수료 후,<br>현장으로 이어지는 길</h2>
             <p>커머스·라이브 방송 운영업체와 면접 연계 협약을 추진 중입니다. 제휴 확정 후 참여 조건을 안내합니다.</p>
+            <p class="more" style="text-align:left"><a href="<?= site_url('career') ?>">진로 연계 자세히 보기 →</a></p>
         </div>
         <div class="flow">
             <div>포트폴리오 제출<i>수료 산출물</i></div>

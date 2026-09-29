@@ -38,4 +38,5 @@
     </div>
 
     <p class="note">플랫폼별 기능과 실제 방송 가능 여부는 개인 계정 자격·정책에 따릅니다.</p>
+    <p class="more"><a href="<?= site_url('about') ?>">아카데미 소개 자세히 보기 →</a></p>
 </div></section>

@@ -18,6 +18,8 @@ $routes->get('partner/done', 'Partner::done');
 $routes->get('privacy', 'Pages::privacy');
 
 // 메뉴 페이지
+$routes->get('about', 'Pages::about');
+$routes->get('career', 'Pages::career');
 $routes->get('courses', 'Courses::index');
 $routes->get('courses/(:segment)', 'Courses::show/$1');
 $routes->get('instructors', 'Instructors::index');

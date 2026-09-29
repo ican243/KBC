@@ -12,7 +12,7 @@
     <span class="label label-dark">아카데미</span>
     <h1>분야별 현장 강사진</h1>
     <p>강사 명단과 경력은 협업 확정 후 증빙을 확인해 공개합니다.</p>
-    <?= view('partials/subnav', ['tabs' => [['소개', site_url('/') . '#about'], ['강사진', site_url('instructors')]], 'active' => '강사진']) ?>
+    <?= view('partials/subnav', ['tabs' => [['소개', site_url('about')], ['강사진', site_url('instructors')]], 'active' => '강사진']) ?>
 </div></section>
 
 <section class="section"><div class="wrap">

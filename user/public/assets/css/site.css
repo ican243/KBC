@@ -311,6 +311,37 @@ img, svg { display: block; }
     .crew-card { flex-direction: column; }
 }
 
+/* ---------- 소개·진로 연계 (문구 페이지) ---------- */
+.prose > p { margin: 0 0 14px; font-size: 16.5px; line-height: 1.8; }
+.prose .sub-title { margin-top: 48px; }
+.prose .sub-title:first-child { margin-top: 0; }
+.notice-box { padding: 16px 18px; border-left: 4px solid var(--c-navy); border-radius: 0 12px 12px 0; background: var(--c-bg-soft); color: var(--c-ink); font-size: 15.5px !important; }
+.status-line { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.field-grid li { padding: 16px 18px; border-radius: 16px; background: #fff; border: 1px solid var(--c-line); }
+.field-grid b { display: block; color: var(--c-navy); }
+.field-grid span { font-size: 14px; color: var(--c-muted); }
+.steps-compact { grid-template-columns: repeat(4, 1fr); margin-bottom: 16px; }
+.steps-compact .step { padding: 20px 18px; }
+.tags-light { margin-bottom: 14px; }
+.tags-light span { background: var(--c-blue-soft); color: var(--c-navy-2); }
+.flow-list { list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.flow-list li { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; border-radius: 16px; background: #fff; border: 1px solid var(--c-line); }
+.flow-list em { flex: none; display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; background: var(--c-navy); color: #fff; font-style: normal; font-weight: 700; }
+.flow-list b { color: var(--c-navy); }
+.flow-list p { margin: 4px 0 0; color: var(--c-muted); font-size: 15px; }
+.cta-box { margin-top: 48px; padding: 32px 28px; border-radius: 24px; background: var(--c-navy); color: #fff; text-align: center; }
+.cta-box h2 { margin: 0 0 18px; font-size: 22px; }
+.cta-box .card-actions { justify-content: center; max-width: 420px; margin: 0 auto; }
+.cta-box .btn-line { background: transparent; color: #fff; border-color: rgba(255, 255, 255, .35); }
+.live-note { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 10px; font-size: 14px; color: var(--c-hero-sub); }
+.live-note i { width: 8px; height: 8px; border-radius: 50%; background: var(--c-live); }
+
+@media (max-width: 720px) {
+    .field-grid { grid-template-columns: 1fr; }
+    .steps-compact { grid-template-columns: 1fr 1fr; }
+}
+
 /* ---------- 스크롤 등장 효과 ---------- */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
 .reveal.show { opacity: 1; transform: none; }
