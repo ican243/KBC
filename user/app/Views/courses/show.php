@@ -4,7 +4,9 @@
  *
  * @var array $course
  * @var array $others
+ * @var array $settings
  */
+$feeNotice = setting($settings, 'fee_notice', '확정 후 안내');
 $items = [
     '대상'           => $course['target'],
     '기간'           => $course['duration'],
@@ -33,8 +35,15 @@ $items = [
             <dd><?= $value !== null && $value !== '' ? nl2br(esc($value)) : '<span class="pending">준비 중</span>' ?></dd>
         <?php endforeach ?>
         <dt>교습비</dt>
-        <dd><?= $course['is_confirmed'] && $course['fee_text'] ? esc($course['fee_text']) : '<span class="pending">확정 후 안내</span>' ?></dd>
+        <dd><?= $course['is_confirmed'] && $course['fee_text'] ? esc($course['fee_text']) : '<span class="pending">' . esc($feeNotice) . '</span>' ?></dd>
     </dl>
+
+    <?php if (setting($settings, 'refund_policy')): ?>
+    <div class="box-soft refund">
+        <h2 class="sub-title">교습비 반환 기준</h2>
+        <p><?= nl2br(esc(setting($settings, 'refund_policy'))) ?></p>
+    </div>
+    <?php endif ?>
 
     <a class="btn btn-live btn-block" href="<?= site_url('contact') . '?course=' . (int) $course['id'] ?>">이 과정 상담 신청하기</a>
 

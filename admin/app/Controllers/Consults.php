@@ -35,6 +35,7 @@ class Consults extends InquiryAdminController
     {
         return [
             'statuses' => InquiryStatus::LABELS,
+            'sources'  => array_keys($this->sourceGroups()),
             'courses'  => (new CourseModel())->options(),
         ];
     }

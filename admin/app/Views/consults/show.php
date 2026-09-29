@@ -21,7 +21,7 @@
         <dt>접수일시</dt><dd><?= dt($row['created_at']) ?></dd>
         <dt>개인정보 동의</dt><dd><?= dt($row['agree_privacy_at']) ?></dd>
         <dt>홍보성 연락</dt><dd><?= $row['agree_marketing'] ? '동의 (' . dt($row['agree_marketing_at']) . ')' : '동의 안 함' ?></dd>
-        <dt>유입 경로</dt><dd><?= esc($row['source'] ?? '-') ?></dd>
+        <dt>유입 경로</dt><dd><?= esc(\App\Libraries\SourceLabel::label($row['source'])) ?> <small class="muted"><?= esc($row['source'] ?? '') ?></small></dd>
         <dt>접속 IP</dt><dd><?= esc($row['ip'] ?? '-') ?></dd>
         <dt>담당자</dt><dd><?= esc($row['admin_name'] ?? '-') ?></dd>
     </dl>

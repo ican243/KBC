@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Libraries\AuditLog;
 use App\Libraries\CsvExport;
 use App\Libraries\InquiryStatus;
+use App\Libraries\SourceLabel;
 use App\Models\AdminModel;
 use App\Models\InquiryMemoModel;
 use CodeIgniter\Exceptions\PageNotFoundException;
@@ -164,7 +165,15 @@ abstract class InquiryAdminController extends BaseController
     }
 
     /**
-     * 공통 필터 (상태, 기간, 검색어)
+     * 유입 경로 이름 => [원래 값...]
+     */
+    protected function sourceGroups(): array
+    {
+        return SourceLabel::groups($this->model()->distinctSources());
+    }
+
+    /**
+     * 공통 필터 (상태, 기간, 검색어, 유입 경로)
      */
     protected function commonFilters(): array
     {
@@ -172,11 +181,21 @@ abstract class InquiryAdminController extends BaseController
         $date   = static fn (string $v): string => preg_match('/^\d{4}-\d{2}-\d{2}$/', $v) ? $v : '';
         $status = $get('status');
 
-        return [
+        $filters = [
             'status' => in_array($status, InquiryStatus::keys(), true) ? $status : '',
             'from'   => $date($get('from')),
             'to'     => $date($get('to')),
             'q'      => mb_substr($get('q'), 0, 50),
+            'source' => '',
         ];
+
+        // 유입 경로: 화면에서는 이름으로 고르고, 조회는 그 이름에 묶인 원래 값들로 한다
+        $groups = $this->sourceGroups();
+        if (isset($groups[$get('source')])) {
+            $filters['source']        = $get('source');
+            $filters['source_values'] = $groups[$get('source')];
+        }
+
+        return $filters;
     }
 }

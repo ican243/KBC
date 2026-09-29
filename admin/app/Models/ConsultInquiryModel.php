@@ -36,6 +36,19 @@ class ConsultInquiryModel extends Model
                 ? $this->where('consult_inquiries.course_id', null)
                 : $this->where('consult_inquiries.course_id', (int) $filters['course_id']);
         }
+        if (isset($filters['source_values'])) {
+            // 같은 이름으로 묶인 유입 값들 (NULL 포함 가능)
+            $values = array_values(array_filter($filters['source_values'], static fn ($v) => $v !== null));
+            $hasNull = in_array(null, $filters['source_values'], true);
+            $this->groupStart();
+            if ($values !== []) {
+                $this->whereIn('consult_inquiries.source', $values);
+            }
+            if ($hasNull) {
+                $values !== [] ? $this->orWhere('consult_inquiries.source', null) : $this->where('consult_inquiries.source', null);
+            }
+            $this->groupEnd();
+        }
         if (($filters['from'] ?? '') !== '') {
             $this->where('consult_inquiries.created_at >=', $filters['from'] . ' 00:00:00');
         }
@@ -59,6 +72,14 @@ class ConsultInquiryModel extends Model
         }
 
         return $this->orderBy('consult_inquiries.created_at', 'DESC')->orderBy('consult_inquiries.id', 'DESC');
+    }
+
+    /**
+     * 목록 필터용: 지금까지 들어온 서로 다른 유입 값 (삭제 처리된 문의 제외)
+     */
+    public function distinctSources(): array
+    {
+        return array_column($this->db->table('consult_inquiries')->select('source')->distinct()->where('deleted_at', null)->get()->getResultArray(), 'source');
     }
 
     public function findDetail(int $id): ?array

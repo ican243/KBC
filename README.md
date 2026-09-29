@@ -62,7 +62,8 @@ DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 - 공유 이미지 `public/og-image.png` (1200×630), 아이콘 `favicon.ico`·`favicon.svg`·`apple-touch-icon.png` (로고 확정 시 교체)
 - `/robots.txt`, `/sitemap.xml` (`Controllers/Seo.php`): 개발 모드는 수집 차단, 운영 모드(`CI_ENVIRONMENT = production`)는 허용 + 사이트맵
   → robots.txt 는 도메인 맨 앞에 있어야 효과가 있으므로 도메인 연결 후 적용
-- 404: `Views/errors/html/error_404.php` (개발 모드에서만 원인 표시)
+- 오류 화면: 404 `error_404.php`, 400 `error_400.php`, 서버 오류 `production.php` (운영 모드, 원인은 서버 로그에만)
+- 교습비 안내 문구(`fee_notice`)·반환 기준(`refund_policy`)은 교육과정 목록·상세에 표시 (반환 기준이 비어 있으면 숨김)
 - 속도 (nginx snippet): CSS·JS·SVG 압축 전송, 정적 파일 7일 캐시 (`?v=` 로 갱신), PHP 화면은 캐시 안 함
 
 ## 공개 홈페이지 화면 구조 (user)
@@ -141,6 +142,7 @@ user/public/assets/
 - 상태: 신규(new) / 연락(contacted) / 상담완료(done) / 보류(hold) — `app/Libraries/InquiryStatus.php`
 - 처리할 때마다 `inquiry_memos` 에 이력 기록 (변경 전·후 상태, 담당자, 메모)
 - 삭제는 `deleted_at` 표시만 (목록에서 제외, DB 에 보관)
+- 유입 경로는 읽기 쉬운 이름으로 표시·필터 (`app/Libraries/SourceLabel.php`, 예: `ref:m.search.naver.com` → 네이버 검색)
 - 상세 열람·CSV 내려받기·삭제는 `writable/logs/audit-날짜.log` 에 기록
 
 ## PHP-FPM (서버)

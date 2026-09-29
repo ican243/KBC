@@ -33,6 +33,7 @@ class Partners extends InquiryAdminController
     {
         return [
             'statuses' => InquiryStatus::LABELS,
+            'sources'  => array_keys($this->sourceGroups()),
             'types'    => PartnerInquiryModel::TYPES,
         ];
     }

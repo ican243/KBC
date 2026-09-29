@@ -1,9 +1,12 @@
 <?php
 /**
  * 교육과정 목록 + 비교표 (기획안 2장·4장)
+ * 교습비 안내 문구(fee_notice)와 반환 기준(refund_policy)은 사이트 설정 값. 반환 기준이 비어 있으면 영역을 숨긴다.
  *
  * @var array $courses
+ * @var array $settings
  */
+$feeNotice = setting($settings, 'fee_notice', '확정 후 안내');
 $rows = [
     '대상'        => 'target',
     '기간'        => 'duration',
@@ -56,11 +59,18 @@ $rows = [
         <?php endforeach ?>
             <tr><th scope="row">교습비</th>
                 <?php foreach ($courses as $c): ?>
-                    <td><?= $c['is_confirmed'] && $c['fee_text'] ? esc($c['fee_text']) : '<span class="pending">확정 후 안내</span>' ?></td>
+                    <td><?= $c['is_confirmed'] && $c['fee_text'] ? esc($c['fee_text']) : '<span class="pending">' . esc($feeNotice) . '</span>' ?></td>
                 <?php endforeach ?>
             </tr>
         </tbody>
     </table></div>
+    <?php endif ?>
+
+    <?php if (setting($settings, 'refund_policy')): ?>
+    <div class="box-soft refund">
+        <h2 class="sub-title">교습비 반환 기준</h2>
+        <p><?= nl2br(esc(setting($settings, 'refund_policy'))) ?></p>
+    </div>
     <?php endif ?>
 
     <div class="box-soft">
