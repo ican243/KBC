@@ -61,7 +61,7 @@ $brand = setting($settings, 'brand_name', 'KBC아카데미');
         <?php else: ?>
             운영 주체·등록 정보: 준비 중<br>
         <?php endif ?>
-        <a href="#">개인정보 처리방침</a> · © <?= esc($brand) ?>
+        <a href="<?= site_url('privacy') ?>"><b>개인정보 처리방침</b></a> · © <?= esc($brand) ?>
     </div>
 </div></footer>
 

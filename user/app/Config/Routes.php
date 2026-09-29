@@ -13,3 +13,6 @@ $routes->get('consult/done', 'Consult::done');
 $routes->get('partner', 'Partner::index');
 $routes->post('partner', 'Partner::submit');
 $routes->get('partner/done', 'Partner::done');
+
+// 안내 페이지
+$routes->get('privacy', 'Pages::privacy');

@@ -57,9 +57,11 @@ $field     = static fn (string $key): string => form_error($key) ? ' has-error' 
             <?php if (form_error('message')): ?><p class="field-error"><?= esc(form_error('message')) ?></p><?php endif ?>
         </div>
 
-        <label class="agree"><input type="checkbox" name="agree_privacy" value="1" required<?= form_old('agree_privacy') === '1' ? ' checked' : '' ?>> <span>[필수] 개인정보 수집·이용에 동의합니다. <a href="#" style="text-decoration:underline">내용 보기</a></span></label>
+        <label class="agree"><input type="checkbox" name="agree_privacy" value="1" required<?= form_old('agree_privacy') === '1' ? ' checked' : '' ?>> <span>[필수] 개인정보 수집·이용에 동의합니다.</span></label>
+        <?= view('partials/consent_notice', ['noticeType' => 'consult']) ?>
         <?php if (form_error('agree_privacy')): ?><p class="field-error"><?= esc(form_error('agree_privacy')) ?></p><?php endif ?>
         <label class="agree"><input type="checkbox" name="agree_marketing" value="1"<?= form_old('agree_marketing') === '1' ? ' checked' : '' ?>> <span>[선택] 설명회·모집 안내 등 홍보성 연락을 받겠습니다.</span></label>
+        <?= view('partials/consent_notice', ['noticeType' => 'marketing']) ?>
 
         <button class="btn btn-navy btn-block" style="margin-top:8px">상담 신청하기</button>
     </form>

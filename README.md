@@ -85,6 +85,20 @@ user/public/assets/
 - 유입 경로: utm 값 또는 외부 유입 사이트 주소를 `source` 에 기록 (`assets/js/site.js`)
 - 연락처는 `010-1234-5678` 형식으로 통일해 저장
 
+## 운영자 메일 알림 (user)
+
+- 접수 완료 화면을 먼저 보낸 뒤 발송 (`app/Libraries/InquiryNotifier.php`), 실패해도 접수에는 영향 없음
+- 받는 주소: DB `site_settings.notify_email`
+- 보내는 계정: `user/.env` 의 `email.*` (네이버 SMTP 465/SSL, `email.SMTPPass` 는 애플리케이션 비밀번호)
+- 메일에는 접수번호, 가린 이름(홍*동), 과정/기관·유형, 접수 시각만 포함. 연락처·문의내용은 관리자 화면에서 확인
+- 발송 결과(sent/failed, 원인)는 `notification_logs` 에 기록
+
+## 개인정보 안내 (user)
+
+- 처리방침: `/privacy` (`app/Views/pages/privacy.php`) — 공개 전 법무 검토 필요
+- 폼 동의 안내: `app/Views/partials/consent_notice.php` (내용 보기)
+- 운영 주체, 보유 기간(`inquiry_retention`), 위탁(`privacy_entrusted`), 보호책임자(`privacy_officer`), 시행일(`privacy_effective_date`)은 `site_settings` 값을 사용하며, 비어 있으면 "준비 중"으로 표시
+
 ## DB 마이그레이션
 
 마이그레이션은 admin 프로젝트에서만 관리한다.

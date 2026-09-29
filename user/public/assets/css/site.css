@@ -189,6 +189,26 @@ img, svg { display: block; }
 .done-no { margin: 4px 0 18px; font-size: clamp(24px, 5vw, 32px); font-weight: 800; letter-spacing: 1px; color: var(--c-navy); }
 .done-text { margin: 0 0 26px; color: var(--c-muted); }
 
+/* ---------- 동의 안내 (내용 보기) ---------- */
+.consent { margin: -4px 0 12px 26px; font-size: 13.5px; color: var(--c-muted); }
+.consent summary { display: inline-block; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.consent[open] summary { margin-bottom: 8px; }
+.consent dl { display: grid; grid-template-columns: 72px 1fr; gap: 6px 10px; margin: 0; padding: 14px; border-radius: 12px; background: var(--c-bg-soft); }
+.consent dt { font-weight: 600; color: var(--c-ink); }
+.consent dd { margin: 0; }
+.consent p { margin: 8px 0 0; }
+.consent a { text-decoration: underline; }
+
+/* ---------- 개인정보 처리방침 ---------- */
+.policy { font-size: 15.5px; }
+.policy h2 { margin: 36px 0 12px; font-size: 19px; color: var(--c-navy); }
+.policy ul { padding-left: 20px; }
+.policy li { margin: 4px 0; }
+.policy table { width: 100%; border-collapse: collapse; font-size: 14.5px; }
+.policy th, .policy td { padding: 10px 12px; border: 1px solid var(--c-line); text-align: left; vertical-align: top; }
+.policy th { background: var(--c-bg-soft); }
+.pending { padding: 1px 8px; border-radius: 6px; background: var(--c-warn-bg); color: var(--c-warn-text); font-size: 13px; font-weight: 600; }
+
 /* ---------- 푸터 ---------- */
 .site-footer { padding: 44px 0 110px; background: var(--c-navy); color: #aeb9d0; font-size: 14px; }
 .site-footer .wrap { display: flex; justify-content: space-between; gap: 24px; flex-wrap: wrap; }

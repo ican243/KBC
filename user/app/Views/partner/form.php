@@ -53,7 +53,8 @@ $field   = static fn (string $key): string => form_error($key) ? ' has-error' : 
             <?php if (form_error('message')): ?><p class="field-error"><?= esc(form_error('message')) ?></p><?php endif ?>
         </div>
 
-        <label class="agree"><input type="checkbox" name="agree_privacy" value="1" required<?= form_old('agree_privacy') === '1' ? ' checked' : '' ?>> <span>[필수] 개인정보 수집·이용에 동의합니다. <a href="#" style="text-decoration:underline">내용 보기</a></span></label>
+        <label class="agree"><input type="checkbox" name="agree_privacy" value="1" required<?= form_old('agree_privacy') === '1' ? ' checked' : '' ?>> <span>[필수] 개인정보 수집·이용에 동의합니다.</span></label>
+        <?= view('partials/consent_notice', ['noticeType' => 'partner']) ?>
         <?php if (form_error('agree_privacy')): ?><p class="field-error"><?= esc(form_error('agree_privacy')) ?></p><?php endif ?>
 
         <button class="btn btn-navy btn-block" style="margin-top:8px">협력 제안 보내기</button>

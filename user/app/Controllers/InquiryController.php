@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Libraries\InquiryNotifier;
 use App\Libraries\ReceiptNumber;
 use App\Libraries\SpamGuard;
 use App\Models\SiteSettingModel;
@@ -12,7 +13,7 @@ use CodeIgniter\Model;
 /**
  * 상담 신청 / 협력 제안 공통 처리
  *
- * 처리 순서: 봇 검사 → 입력값 검사 → IP 제한 → 연락처 중복 → 접수번호 발급 후 저장 → 완료 화면
+ * 처리 순서: 봇 검사 → 입력값 검사 → IP 제한 → 연락처 중복 → 접수번호 발급 후 저장 → 완료 화면 → 운영자 메일
  */
 abstract class InquiryController extends BaseController
 {
@@ -24,6 +25,9 @@ abstract class InquiryController extends BaseController
 
     /** 완료 화면 주소 */
     protected string $donePath;
+
+    /** 방금 저장한 문의 id */
+    private int $insertedId = 0;
 
     /** 입력 오류 시 돌아갈 주소 */
     abstract protected function formUrl(): string;
@@ -87,6 +91,9 @@ abstract class InquiryController extends BaseController
 
         $guard->remember($phone, $this->form);
 
+        // 운영자 메일 알림 (응답을 보낸 뒤 발송, 실패해도 접수에는 영향 없음)
+        InquiryNotifier::queue($this->form, $receiptNo, $row + ['id' => $this->insertedId]);
+
         // 새로고침해도 다시 저장되지 않도록 완료 화면으로 이동
         return redirect()->to(site_url($this->donePath))->with('receipt_no', $receiptNo);
     }
@@ -103,6 +110,7 @@ abstract class InquiryController extends BaseController
 
             try {
                 $model->insert($row);
+                $this->insertedId = (int) $model->getInsertID();
 
                 return $row['receipt_no'];
             } catch (DatabaseException $e) {

@@ -7,7 +7,7 @@ use CodeIgniter\Database\Seeder;
 /**
  * 초기 콘텐츠
  * 기획안(2026-09-20)과 협업 제안서에 있는 내용만 넣는다. 확정 전 정보는 비워 둔다.
- * 이미 데이터가 있는 테이블은 건너뛴다.
+ * 과정·강사는 데이터가 있으면 건너뛰고, 사이트 설정은 없는 항목만 추가한다.
  *
  * 사용: php spark db:seed InitialContentSeeder
  */
@@ -96,38 +96,42 @@ class InitialContentSeeder extends Seeder
             $this->db->table('instructors')->insertBatch($rows);
         }
 
-        // 사이트 설정: 확정 전 항목은 값 없이 키만 만든다
-        if ($this->db->table('site_settings')->countAllResults() === 0) {
-            $settings = [
-                ['brand_name', '브랜드명', 'KBC아카데미'],
-                ['status_notice', '현재 운영 상태 문구', 'KBC아카데미 개원 준비 중 / 강남 협업 교육장 검토 중'],
-                ['launch_notice', '개강 안내 문구', '2026년 10월 시범 개강 목표'],
-                ['fee_notice', '교습비·개강일 안내 문구', '세부 일정과 비용 확정 후 안내'],
-                ['career_notice', '진로 연계 안내 문구', '진로 연계 체계 구축 및 업체 협약 추진 중'],
-                ['operator_name', '운영 주체(법인명)', null],
-                ['representative', '대표자', null],
-                ['business_no', '사업자등록번호', null],
-                ['academy_reg_no', '학원 등록번호', null],
-                ['address', '교육장 주소', null],
-                ['phone', '대표 연락처', null],
-                ['email', '대표 이메일', null],
-                ['privacy_officer', '개인정보 보호책임자', null],
-                ['refund_policy', '교습비 반환 기준', null],
-                ['inquiry_retention', '문의 정보 보존 기간', null],
-                ['notify_email', '새 문의 알림 받을 이메일', null],
-            ];
+        // 사이트 설정: 확정 전 항목은 값 없이 키만 만든다. 없는 항목만 추가하고 기존 값은 건드리지 않는다.
+        $settings = [
+            ['brand_name', '브랜드명', 'KBC아카데미'],
+            ['status_notice', '현재 운영 상태 문구', 'KBC아카데미 개원 준비 중 / 강남 협업 교육장 검토 중'],
+            ['launch_notice', '개강 안내 문구', '2026년 10월 시범 개강 목표'],
+            ['fee_notice', '교습비·개강일 안내 문구', '세부 일정과 비용 확정 후 안내'],
+            ['career_notice', '진로 연계 안내 문구', '진로 연계 체계 구축 및 업체 협약 추진 중'],
+            ['operator_name', '운영 주체(법인명)', null],
+            ['representative', '대표자', null],
+            ['business_no', '사업자등록번호', null],
+            ['academy_reg_no', '학원 등록번호', null],
+            ['address', '교육장 주소', null],
+            ['phone', '대표 연락처', null],
+            ['email', '대표 이메일', null],
+            ['privacy_officer', '개인정보 보호책임자', null],
+            ['refund_policy', '교습비 반환 기준', null],
+            ['inquiry_retention', '문의 정보 보존 기간', null],
+            ['notify_email', '새 문의 알림 받을 이메일', null],
+            ['privacy_effective_date', '개인정보 처리방침 시행일', null],
+            ['privacy_entrusted', '개인정보 처리 위탁 (업체·업무)', null],
+        ];
 
-            $rows = [];
-            foreach ($settings as $i => [$key, $label, $value]) {
-                $rows[] = [
-                    'setting_key' => $key,
-                    'label'       => $label,
-                    'value'       => $value,
-                    'sort_order'  => $i + 1,
-                    'updated_at'  => $now,
-                ];
+        $existing = array_column($this->db->table('site_settings')->select('setting_key')->get()->getResultArray(), 'setting_key');
+
+        foreach ($settings as $i => [$key, $label, $value]) {
+            if (in_array($key, $existing, true)) {
+                continue;
             }
-            $this->db->table('site_settings')->insertBatch($rows);
+
+            $this->db->table('site_settings')->insert([
+                'setting_key' => $key,
+                'label'       => $label,
+                'value'       => $value,
+                'sort_order'  => $i + 1,
+                'updated_at'  => $now,
+            ]);
         }
     }
 }
