@@ -9,8 +9,11 @@ kbc/
 ├─ user/       공개 홈페이지 (CodeIgniter4)
 ├─ admin/      관리자 (CodeIgniter4)
 ├─ database/   DB 스키마
+├─ scripts/    백업·로그 정리·공유 이미지 생성
 └─ docs/       서버 설정 및 인수인계 문서
 ```
+
+설치·운영·도메인 이전 절차는 `docs/handover/` (읽는 순서는 그 폴더의 README.md).
 
 ## 개발 환경
 
@@ -25,11 +28,11 @@ kbc/
 ## 설치
 
 ```bash
-cd user  && composer install && cp env .env
-cd admin && composer install && cp env .env
+cd user  && composer install && cp .env.example .env
+cd admin && composer install && cp .env.example .env
 ```
 
-각 `.env`에 `app.baseURL`과 DB 접속 정보를 입력한다.
+각 `.env`의 `입력` 표시된 값(주소, DB 비밀번호, 메일 계정)을 채운다. 자세한 순서는 `docs/handover/1_설치_가이드.md`.
 DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 
 - user    : kbc_user    (콘텐츠 테이블 조회 + 문의 테이블 등록만 가능, 문의 조회 불가)
@@ -60,6 +63,13 @@ DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 
 - 모든 페이지: 제목, 설명, 대표 URL(canonical), 카카오톡·SNS 공유 태그(og:*, twitter:*), 기관 정보(JSON-LD) — `Views/layouts/main.php`
 - 공유 이미지 `public/og-image.png` (1200×630), 아이콘 `favicon.ico`·`favicon.svg`·`apple-touch-icon.png` (로고 확정 시 교체)
+  - 다시 만들기: `scripts/make-og-image.php` 맨 위의 문구·색을 고친 뒤 실행 (관리자 아이콘도 함께 생성)
+    ```bash
+    T=$(mktemp -d) && (cd $T && npm pack pretendard@1.3.9 && tar -xzf pretendard-1.3.9.tgz)
+    php scripts/make-og-image.php $T/package/dist/public/static /tmp/og-preview   # 미리 보기 폴더에 생성
+    php scripts/make-og-image.php $T/package/dist/public/static                   # 실제 위치에 덮어쓰기
+    ```
+  - 바꾼 뒤 카카오 공유 디버거에서 캐시 초기화 (카카오톡은 미리보기를 오래 저장함)
 - `/robots.txt`, `/sitemap.xml` (`Controllers/Seo.php`): 개발 모드는 수집 차단, 운영 모드(`CI_ENVIRONMENT = production`)는 허용 + 사이트맵
   → robots.txt 는 도메인 맨 앞에 있어야 효과가 있으므로 도메인 연결 후 적용
 - 오류 화면: 404 `error_404.php`, 400 `error_400.php`, 서버 오류 `production.php` (운영 모드, 원인은 서버 로그에만)
