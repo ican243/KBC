@@ -1,0 +1,12 @@
+# KBC아카데미 정기 작업 → /etc/cron.d/kbc 로 복사 (서버 시간대 UTC 기준, 한국 시간 = UTC + 9)
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# 매일 03:30 (한국) 자동 백업
+30 18 * * * root /usr/local/sbin/kbc-backup >> /var/log/kbc-backup.log 2>&1
+
+# 매일 04:00 (한국) 로그 정리
+0 19 * * * root /usr/local/sbin/kbc-cleanup-logs >> /var/log/kbc-backup.log 2>&1
+
+# 매일 04:30 (한국) 문의 자동 파기 - 보존 기간(admin/.env inquiry.retentionDays) 확정 후 아래 줄의 # 을 지운다
+# 30 19 * * * www-data cd /var/www/kbc/admin && php spark inquiry:purge >> /var/www/kbc/admin/writable/logs/purge.log 2>&1

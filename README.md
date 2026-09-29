@@ -150,6 +150,19 @@ KBC 는 다른 사이트와 분리된 전용 pool 을 사용한다 (`docs/php-fp
 - 업로드 6M / 요청 8M (관리자 경로 nginx `client_max_body_size 8m`)
 - `open_basedir = /var/www/kbc/:/tmp/` — KBC 폴더 밖 파일 접근 차단
 
+## 운영 (백업·로그·문의 파기)
+
+| 작업 | 파일 | 서버 설치 위치 | 실행 |
+|---|---|---|---|
+| 자동 백업 (DB·업로드·.env 매일, 코드 주 1회, 14일 보관) | `scripts/backup.sh` | `/usr/local/sbin/kbc-backup` | 매일 03:30 (한국) |
+| 로그 정리 (오류 30일, 열람 기록 1년) | `scripts/cleanup-logs.sh` | `/usr/local/sbin/kbc-cleanup-logs` | 매일 04:00 (한국) |
+| 문의 자동 파기 | `admin/app/Commands/InquiryPurge.php` | `php spark inquiry:purge [--dry-run]` | 보존 기간 확정 후 예약 |
+
+- 예약: `docs/ops/cron.kbc` → `/etc/cron.d/kbc`
+- 실행 파일은 root 만 고칠 수 있는 위치에 설치한다 (웹 계정이 고칠 수 있는 폴더의 파일을 root 로 실행하지 않기 위해)
+- 백업 위치: `/var/www/backups/kbc_auto/` (서버 밖 보관 위치는 회사 결정 필요)
+- 공개 전 점검 결과·검수 문서: `docs/qa/`
+
 ## DB 마이그레이션
 
 마이그레이션은 admin 프로젝트에서만 관리한다.

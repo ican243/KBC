@@ -15,7 +15,7 @@ class AuditLog
             date('Y-m-d H:i:s'),
             session('admin_id') ?? '-',
             session('admin_name') ?? '-',
-            service('request')->getIPAddress(),
+            is_cli() ? 'cli' : service('request')->getIPAddress(),
             $action,
             str_replace(["\t", "\n", "\r"], ' ', $detail)
         );
