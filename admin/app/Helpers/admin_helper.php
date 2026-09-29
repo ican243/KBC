@@ -72,3 +72,13 @@ if (! function_exists('public_url')) {
         return rtrim((string) env('site.publicURL', ''), '/') . '/' . ltrim($path, '/');
     }
 }
+
+if (! function_exists('is_owner')) {
+    /**
+     * 대표 관리자인지 (메뉴·버튼 표시용. 실제 권한 확인은 AdminAuth 필터가 한다)
+     */
+    function is_owner(): bool
+    {
+        return session('admin_role') === 'owner';
+    }
+}

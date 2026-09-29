@@ -5,6 +5,7 @@
  * @var string $title
  */
 $current = service('uri')->getSegment(1);
+$owner   = is_owner();
 $menu    = [
     ''              => '대시보드',
     'consults'      => '상담 문의',
@@ -15,10 +16,14 @@ $menu    = [
     'notices'       => '공지',
     'events'        => '설명회',
     'faqs'          => 'FAQ',
-    'settings'      => '사이트 설정',
+    'settings'      => '사이트 설정',     // 대표 관리자만
     'notifications' => '알림 기록',
+    'admins'        => '관리자 계정',     // 대표 관리자만
     'account'       => '내 계정',
 ];
+if (! $owner) {
+    unset($menu['settings'], $menu['admins']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -41,7 +46,7 @@ $menu    = [
     </nav>
     <form method="post" action="<?= site_url('logout') ?>">
         <?= csrf_field() ?>
-        <?= esc(session('admin_name')) ?>
+        <?= esc(session('admin_name')) ?> <small>(<?= $owner ? '대표 관리자' : '담당자' ?>)</small>
         <button type="submit">로그아웃</button>
     </form>
 </div></header>

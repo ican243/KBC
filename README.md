@@ -222,6 +222,20 @@ php spark db:seed InitialContentSeeder
 - 콘텐츠·설정 변경은 `writable/logs/audit-날짜.log` 에 기록
 - 검사 오류 문구: `app/Language/ko/Validation.php` (관리자 `.env` 의 `app.defaultLocale = 'ko'`)
 
+## 관리자 역할과 계정 관리 (admin)
+
+| 기능 | 대표 관리자(owner) | 담당자(staff) |
+|---|---|---|
+| 문의 보기·처리, 콘텐츠, 통계, 알림 기록, 내 계정 | O | O |
+| 문의 CSV 내려받기, 문의 삭제, 사이트 설정, 관리자 계정 관리 | O | X |
+
+- 권한은 라우트 필터로 확인 (`adminauth:owner`), 화면의 메뉴·버튼 숨김은 보조 (`is_owner()`)
+- `/admins`: 계정 추가(임시 비밀번호 1회 표시), 역할 변경, 사용 중지/다시 사용, 임시 비밀번호 발급(잠금 해제 포함), 2단계 초기화
+- 임시 비밀번호로 로그인하면 ① 비밀번호 변경 → ② 2단계 인증 설정이 강제됨
+- 계정 삭제 없음 (처리 이력 보존). 자기 자신·마지막 대표 관리자는 중지·강등 불가
+- 역할 변경·중지는 매 요청 DB 확인으로 즉시 적용
+- 서버 명령 `php spark admin:create` 도 역할 선택 (대표 관리자가 없으면 기본 owner)
+
 ## 관리자 로그인 / 2단계 인증 (admin)
 
 1. 아이디·비밀번호 → 2. OTP 앱(Google Authenticator 등) 6자리 또는 복구 코드

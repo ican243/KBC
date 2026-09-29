@@ -50,7 +50,9 @@ use App\Libraries\SourceLabel;
 
 <div class="meta">
     <span>총 <?= number_format($total) ?>건</span>
+    <?php if (is_owner()): ?>
     <a class="btn btn-line" href="<?= site_url('consults/export') . '?' . http_build_query(array_filter(array_diff_key($filters, ['source_values' => 1]))) ?>">CSV 내려받기</a>
+    <?php endif ?>
 </div>
 
 <div class="table-wrap"><table>

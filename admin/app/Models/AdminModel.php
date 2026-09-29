@@ -14,6 +14,8 @@ class AdminModel extends Model
     protected $allowedFields = [
         'username',
         'password_hash',
+        'must_change_password',
+        'role',
         'name',
         'status',
         'failed_attempts',
@@ -23,6 +25,11 @@ class AdminModel extends Model
         'recovery_codes',
         'last_login_at',
         'last_login_ip',
+    ];
+
+    public const ROLES = [
+        'owner' => '대표 관리자',
+        'staff' => '담당자',
     ];
 
     // 연속 실패 허용 횟수 / 초과 시 차단 시간(분)
@@ -35,6 +42,14 @@ class AdminModel extends Model
     public function options(): array
     {
         return array_column($this->select('id, name')->where('status', 'active')->orderBy('id')->findAll(), 'name', 'id');
+    }
+
+    /**
+     * 사용 중인 대표 관리자 수 (마지막 대표 관리자 보호용)
+     */
+    public function countActiveOwners(): int
+    {
+        return $this->where('role', 'owner')->where('status', 'active')->countAllResults();
     }
 
     public function findByUsername(string $username): ?array

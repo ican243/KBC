@@ -88,7 +88,7 @@ class Account extends BaseController
 
     public function password()
     {
-        return view('account/password', ['title' => '비밀번호 변경']);
+        return view('account/password', ['title' => '비밀번호 변경', 'forced' => (bool) $this->me()['must_change_password']]);
     }
 
     public function changePassword()
@@ -117,8 +117,16 @@ class Account extends BaseController
             return $back->with('error', '현재 비밀번호와 다른 비밀번호를 입력해 주세요.');
         }
 
-        (new AdminModel())->update($admin['id'], ['password_hash' => password_hash($new, PASSWORD_DEFAULT)]);
+        (new AdminModel())->update($admin['id'], [
+            'password_hash'        => password_hash($new, PASSWORD_DEFAULT),
+            'must_change_password' => 0,
+        ]);
         AuditLog::write('password_changed', $admin['username']);
+
+        // 첫 로그인(임시 비밀번호)이면 다음 단계인 2단계 인증 설정으로
+        if ($admin['totp_enabled_at'] === null) {
+            return redirect()->to(site_url('account/2fa'))->with('message', '비밀번호를 변경했습니다. 이어서 2단계 인증을 설정해 주세요.');
+        }
 
         return redirect()->to(site_url('account'))->with('message', '비밀번호를 변경했습니다.');
     }

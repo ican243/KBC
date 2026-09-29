@@ -9,6 +9,7 @@ use CodeIgniter\CLI\CLI;
 /**
  * 관리자 계정 생성
  * 비밀번호는 명령어 인자로 받지 않는다. (셸 기록에 남지 않도록 입력으로만 받음)
+ * 역할: 대표 관리자가 아직 없으면 기본값 owner, 있으면 staff (새 서버 첫 계정은 대표 관리자)
  *
  * 사용: php spark admin:create
  */
@@ -32,6 +33,9 @@ class AdminCreate extends BaseCommand
 
         $name = trim(CLI::prompt('이름', null, 'required'));
 
+        $default = $model->countActiveOwners() === 0 ? 'owner' : 'staff';
+        $role    = CLI::prompt('역할 (owner=대표 관리자 / staff=담당자)', $default === 'owner' ? ['owner', 'staff'] : ['staff', 'owner']);
+
         $password = $this->readPassword('비밀번호: ');
         if (mb_strlen($password) < 8) {
             CLI::error('비밀번호는 8자 이상이어야 합니다.');
@@ -49,10 +53,11 @@ class AdminCreate extends BaseCommand
             'username'      => $username,
             'password_hash' => password_hash($password, PASSWORD_DEFAULT),
             'name'          => $name,
+            'role'          => $role,
             'status'        => 'active',
         ]);
 
-        CLI::write('관리자 계정이 생성되었습니다: ' . $username, 'green');
+        CLI::write('관리자 계정이 생성되었습니다: ' . $username . ' (' . ($role === 'owner' ? '대표 관리자' : '담당자') . ')', 'green');
 
         return EXIT_SUCCESS;
     }
