@@ -114,6 +114,13 @@ user/public/assets/
 - 삭제는 `deleted_at` 표시만 (목록에서 제외, DB 에 보관)
 - 상세 열람·CSV 내려받기·삭제는 `writable/logs/audit-날짜.log` 에 기록
 
+## PHP-FPM (서버)
+
+KBC 는 다른 사이트와 분리된 전용 pool 을 사용한다 (`docs/php-fpm/kbc.conf` → `/etc/php/8.3/fpm/pool.d/kbc.conf`).
+- 소켓 `/run/php/php8.3-fpm-kbc.sock` (nginx snippet 의 fastcgi_pass)
+- 업로드 6M / 요청 8M (관리자 경로 nginx `client_max_body_size 8m`)
+- `open_basedir = /var/www/kbc/:/tmp/` — KBC 폴더 밖 파일 접근 차단
+
 ## DB 마이그레이션
 
 마이그레이션은 admin 프로젝트에서만 관리한다.
@@ -153,6 +160,7 @@ php spark db:seed InitialContentSeeder
 | 주소 | 내용 |
 |---|---|
 | /courses | 교육과정 (확정 여부·교습비, 순서, 공개) — 상담 기록이 참조하므로 삭제 불가, 비공개만 |
+| /instructors | 강사진 (사진 업로드, 게시 동의 체크 후에만 실명·사진·경력 공개) |
 | /notices | 공지 (게시일이 지나야 홈페이지에 표시 → 예약 게시) |
 | /events | 설명회 일정 (지난 일정은 홈페이지에서 자동 제외) |
 | /faqs | 자주 묻는 질문 (분류, 순서) |
@@ -160,6 +168,9 @@ php spark db:seed InitialContentSeeder
 
 - 공통 처리: `app/Controllers/ContentController.php` (목록·등록·수정·공개 전환·순서·삭제), 메뉴별 컨트롤러는 입력 규칙만 정의
 - 공지·FAQ 내용은 일반 글자만 저장 (HTML 에디터 없음)
+- 강사 사진 (`app/Libraries/ImageUpload.php`): JPG·PNG·WEBP 5MB 이하, 파일 내용으로 형식 확인, 4000px 이하,
+  휴대폰 방향 보정 후 가로 800px JPG 로 다시 저장(EXIF·위치정보 제거), 무작위 파일명
+  → `user/public/uploads/instructors/` (git 제외, 서버 백업으로 관리). 사진 교체·강사 삭제 시 옛 파일 삭제
 - 콘텐츠·설정 변경은 `writable/logs/audit-날짜.log` 에 기록
 - 검사 오류 문구: `app/Language/ko/Validation.php` (관리자 `.env` 의 `app.defaultLocale = 'ko'`)
 

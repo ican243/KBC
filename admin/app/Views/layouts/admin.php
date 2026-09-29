@@ -10,6 +10,7 @@ $menu    = [
     'consults'      => '상담 문의',
     'partners'      => '협력 제안',
     'courses'       => '교육과정',
+    'instructors'   => '강사진',
     'notices'       => '공지',
     'events'        => '설명회',
     'faqs'          => 'FAQ',

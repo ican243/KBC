@@ -35,7 +35,7 @@ $routes->group('', ['filter' => 'adminauth'], static function ($routes) {
     $routes->get('notifications', 'Notifications::index');
 
     // 홈페이지 콘텐츠 (같은 구조)
-    foreach (['courses' => 'Courses', 'notices' => 'Notices', 'events' => 'Events', 'faqs' => 'Faqs'] as $path => $controller) {
+    foreach (['courses' => 'Courses', 'instructors' => 'Instructors', 'notices' => 'Notices', 'events' => 'Events', 'faqs' => 'Faqs'] as $path => $controller) {
         $routes->get($path, "{$controller}::index");
         $routes->get("{$path}/new", "{$controller}::create");
         $routes->post($path, "{$controller}::store");
