@@ -26,6 +26,8 @@ $menu    = [
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title><?= esc($title ?? '관리자') ?> | KBC아카데미 관리자</title>
+    <link rel="icon" href="<?= base_url('favicon.ico') ?>" sizes="32x32">
+    <link rel="icon" href="<?= base_url('favicon.svg') ?>" type="image/svg+xml">
     <link rel="stylesheet" href="<?= asset('assets/css/admin.css') ?>">
 </head>
 <body>

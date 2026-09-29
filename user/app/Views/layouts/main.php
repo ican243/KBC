@@ -6,7 +6,10 @@
  * @var string $title
  * @var string $description
  */
-$brand = setting($settings, 'brand_name', 'KBC아카데미');
+$brand     = setting($settings, 'brand_name', 'KBC아카데미');
+$pageTitle = $title ?? $brand;
+$pageDesc  = ($description ?? '') !== '' ? $description : '개인방송·커머스방송·협업형 라이브 진행을 위한 댄스, 보컬, 화술, 촬영, 편집, SNS 실습';
+$canonical = current_url(); // 주소 뒤 ?page=, ?utm_ 등을 뺀 대표 주소
 
 // 현재 메뉴 표시 (첫 번째 주소 조각 기준)
 $segment = service('uri')->getSegment(1);
@@ -26,15 +29,43 @@ $gnb     = [
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= esc($title ?? $brand) ?></title>
-    <meta name="description" content="<?= esc($description ?? '') ?>">
+    <title><?= esc($pageTitle) ?></title>
+    <meta name="description" content="<?= esc($pageDesc, 'attr') ?>">
     <?php if (ENVIRONMENT !== 'production'): ?>
     <meta name="robots" content="noindex, nofollow">
     <?php endif ?>
+    <link rel="canonical" href="<?= esc($canonical, 'attr') ?>">
+
+    <!-- 카카오톡·SNS 공유 미리보기 -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="<?= esc($title ?? $brand) ?>">
-    <meta property="og:description" content="<?= esc($description ?? '') ?>">
-    <meta property="og:url" content="<?= esc(current_url()) ?>">
+    <meta property="og:site_name" content="<?= esc($brand, 'attr') ?>">
+    <meta property="og:locale" content="ko_KR">
+    <meta property="og:title" content="<?= esc($pageTitle, 'attr') ?>">
+    <meta property="og:description" content="<?= esc($pageDesc, 'attr') ?>">
+    <meta property="og:url" content="<?= esc($canonical, 'attr') ?>">
+    <meta property="og:image" content="<?= esc(base_url('og-image.png'), 'attr') ?>">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="<?= esc($pageTitle, 'attr') ?>">
+    <meta name="twitter:description" content="<?= esc($pageDesc, 'attr') ?>">
+    <meta name="twitter:image" content="<?= esc(base_url('og-image.png'), 'attr') ?>">
+
+    <!-- 아이콘 -->
+    <link rel="icon" href="<?= base_url('favicon.ico') ?>" sizes="32x32">
+    <link rel="icon" href="<?= base_url('favicon.svg') ?>" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="<?= base_url('apple-touch-icon.png') ?>">
+    <meta name="theme-color" content="#0f1d3d">
+
+    <!-- 검색엔진용 기관 정보 (확정된 항목만) -->
+    <script type="application/ld+json"><?= json_encode([
+        '@context' => 'https://schema.org',
+        '@type'    => 'EducationalOrganization',
+        'name'     => $brand,
+        'url'      => base_url(),
+        'logo'     => base_url('apple-touch-icon.png'),
+    ], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG) ?></script>
+
     <link rel="stylesheet" href="<?= asset('assets/fonts/pretendard/pretendard.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/css/tokens.css') ?>">
     <link rel="stylesheet" href="<?= asset('assets/css/site.css') ?>">

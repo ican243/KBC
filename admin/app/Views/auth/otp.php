@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex, nofollow">
     <title>2단계 인증 | KBC아카데미</title>
+    <link rel="icon" href="<?= base_url('favicon.ico') ?>" sizes="32x32">
     <link rel="stylesheet" href="<?= asset('assets/css/auth.css') ?>">
 </head>
 <body>

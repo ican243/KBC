@@ -14,6 +14,10 @@ $routes->get('partner', 'Partner::index');
 $routes->post('partner', 'Partner::submit');
 $routes->get('partner/done', 'Partner::done');
 
+// 검색엔진
+$routes->get('robots.txt', 'Seo::robots');
+$routes->get('sitemap.xml', 'Seo::sitemap');
+
 // 안내 페이지
 $routes->get('privacy', 'Pages::privacy');
 

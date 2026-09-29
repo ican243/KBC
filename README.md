@@ -56,6 +56,15 @@ DB 계정은 user/admin이 서로 다른 계정을 사용한다.
 - 공개 문구 규칙 (기획안 8장): "취업 보장", "수료 즉시 취업", 소득 금액 표현 사용 안 함. 공개 용어는 "협업형 라이브 방송".
   진로 연계는 "연계·설명회·면접 기회"까지만 표현 (직업소개 신고·등록 요건 검토 전). 소개·진로 문구는 `Views/pages/about.php`, `career.php`
 
+## 검색·공유 설정 (user)
+
+- 모든 페이지: 제목, 설명, 대표 URL(canonical), 카카오톡·SNS 공유 태그(og:*, twitter:*), 기관 정보(JSON-LD) — `Views/layouts/main.php`
+- 공유 이미지 `public/og-image.png` (1200×630), 아이콘 `favicon.ico`·`favicon.svg`·`apple-touch-icon.png` (로고 확정 시 교체)
+- `/robots.txt`, `/sitemap.xml` (`Controllers/Seo.php`): 개발 모드는 수집 차단, 운영 모드(`CI_ENVIRONMENT = production`)는 허용 + 사이트맵
+  → robots.txt 는 도메인 맨 앞에 있어야 효과가 있으므로 도메인 연결 후 적용
+- 404: `Views/errors/html/error_404.php` (개발 모드에서만 원인 표시)
+- 속도 (nginx snippet): CSS·JS·SVG 압축 전송, 정적 파일 7일 캐시 (`?v=` 로 갱신), PHP 화면은 캐시 안 함
+
 ## 공개 홈페이지 화면 구조 (user)
 
 ```

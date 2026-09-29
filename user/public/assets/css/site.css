@@ -374,3 +374,13 @@ img, svg { display: block; }
     .reveal { opacity: 1; transform: none; transition: none; }
     .course, .btn { transition: none; }
 }
+
+/* ---------- 404 ---------- */
+.error-page { min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;
+              padding: 40px 20px; text-align: center; background: var(--c-hero-bg); color: var(--c-hero-text); }
+.error-page .logo { margin-bottom: 28px; }
+.error-code { margin: 0; font-size: 72px; font-weight: 800; line-height: 1; color: var(--c-accent-text); }
+.error-page h1 { margin: 8px 0; font-size: 26px; }
+.error-page > p { margin: 0 0 22px; color: var(--c-hero-sub); }
+.error-page .card-actions { flex-wrap: wrap; justify-content: center; }
+.error-debug { margin-top: 26px !important; font-size: 13px; opacity: .6; }
