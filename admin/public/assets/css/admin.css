@@ -1,0 +1,101 @@
+/* KBC아카데미 관리자 */
+:root {
+    --navy: #14264a;
+    --navy-2: #2b4a8b;
+    --ink: #1c2533;
+    --muted: #667085;
+    --line: #e3e7ef;
+    --bg: #f3f5f9;
+    --danger: #c0392b;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, "Malgun Gothic", "Apple SD Gothic Neo", sans-serif; font-size: 14.5px; line-height: 1.55; }
+a { color: var(--navy-2); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* 상단 메뉴 */
+.top { background: var(--navy); color: #fff; }
+.top .in { display: flex; align-items: center; gap: 24px; max-width: 1200px; margin: 0 auto; padding: 0 20px; height: 56px; }
+.top strong { font-size: 15px; white-space: nowrap; }
+.top nav { display: flex; gap: 4px; flex: 1; overflow-x: auto; }
+.top nav a { padding: 7px 12px; border-radius: 6px; color: #cfd8ea; white-space: nowrap; }
+.top nav a:hover { background: rgba(255, 255, 255, .08); text-decoration: none; }
+.top nav a.on { background: rgba(255, 255, 255, .14); color: #fff; font-weight: 600; }
+.top form { margin: 0; display: flex; align-items: center; gap: 10px; font-size: 13px; color: #cfd8ea; white-space: nowrap; }
+.top button { padding: 6px 12px; border: 0; border-radius: 6px; background: #fff; color: var(--navy); font-size: 13px; cursor: pointer; }
+
+main { max-width: 1200px; margin: 24px auto 60px; padding: 0 20px; }
+h1 { margin: 0 0 18px; font-size: 22px; }
+.box { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 20px; margin-bottom: 18px; }
+.box h2 { margin: 0 0 14px; font-size: 16px; }
+
+/* 알림 메시지 */
+.flash { padding: 11px 14px; border-radius: 8px; margin-bottom: 16px; }
+.flash-ok { background: #e8f5ee; color: #1e6b41; }
+.flash-err { background: #fdecec; color: var(--danger); }
+
+/* 요약 카드 */
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 18px; }
+.stat { background: #fff; border: 1px solid var(--line); border-radius: 10px; padding: 18px; }
+.stat span { display: block; color: var(--muted); font-size: 13px; }
+.stat b { font-size: 26px; }
+.stat.warn { border-color: #f1b8b3; background: #fff7f6; }
+.stat.warn b { color: var(--danger); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+/* 필터 */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-end; }
+.filters label { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; color: var(--muted); }
+input, select, textarea { font: inherit; padding: 8px 10px; border: 1px solid #cfd6e2; border-radius: 6px; background: #fff; }
+textarea { width: 100%; min-height: 90px; resize: vertical; }
+.btn { display: inline-block; padding: 8px 14px; border: 1px solid transparent; border-radius: 6px; background: var(--navy); color: #fff; font: inherit; cursor: pointer; }
+.btn:hover { text-decoration: none; opacity: .92; }
+.btn-line { background: #fff; color: var(--navy); border-color: #cfd6e2; }
+.btn-danger { background: #fff; color: var(--danger); border-color: #efc2bd; }
+
+/* 표 */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; background: #fff; }
+th, td { padding: 10px 12px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+th { background: #f8f9fc; color: var(--muted); font-weight: 600; font-size: 13px; }
+tr.is-new td { font-weight: 700; }
+td.wrap { white-space: normal; }
+.empty { padding: 30px; text-align: center; color: var(--muted); }
+.meta { display: flex; justify-content: space-between; align-items: center; margin: 14px 0 8px; color: var(--muted); }
+
+/* 상태 배지 */
+.badge { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 12px; font-weight: 600; }
+.badge-new { background: #fdecef; color: #c8243d; }
+.badge-contacted { background: #e8efff; color: #2b4a8b; }
+.badge-done { background: #e8f5ee; color: #1e6b41; }
+.badge-hold { background: #f1f2f5; color: #667085; }
+.badge-sent { background: #e8f5ee; color: #1e6b41; }
+.badge-failed { background: #fdecef; color: #c8243d; }
+
+/* 상세 */
+dl.info { display: grid; grid-template-columns: 130px 1fr; gap: 10px 16px; margin: 0; }
+dl.info dt { color: var(--muted); }
+dl.info dd { margin: 0; word-break: break-all; }
+.process { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.process .full { grid-column: 1 / -1; }
+.process label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.history { list-style: none; margin: 0; padding: 0; }
+.history li { padding: 12px 0; border-top: 1px solid var(--line); }
+.history li:first-child { border-top: 0; }
+.history small { color: var(--muted); }
+.history p { margin: 6px 0 0; white-space: pre-wrap; }
+
+/* 페이지 번호 (CI4 기본 pager) */
+.pagination { display: flex; gap: 4px; list-style: none; padding: 0; margin: 16px 0 0; justify-content: center; }
+.pagination a, .pagination span { display: block; padding: 6px 11px; border: 1px solid var(--line); border-radius: 6px; background: #fff; }
+.pagination .active a { background: var(--navy); color: #fff; border-color: var(--navy); }
+
+@media (max-width: 900px) {
+    .stats { grid-template-columns: 1fr 1fr; }
+    .grid2, .process { grid-template-columns: 1fr; }
+    dl.info { grid-template-columns: 100px 1fr; }
+}
+
+/* 대시보드 카드 링크 */
+a.stat { display: block; color: inherit; }
+a.stat:hover { text-decoration: none; border-color: var(--navy-2); }

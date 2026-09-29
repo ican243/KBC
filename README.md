@@ -99,6 +99,21 @@ user/public/assets/
 - 폼 동의 안내: `app/Views/partials/consent_notice.php` (내용 보기)
 - 운영 주체, 보유 기간(`inquiry_retention`), 위탁(`privacy_entrusted`), 보호책임자(`privacy_officer`), 시행일(`privacy_effective_date`)은 `site_settings` 값을 사용하며, 비어 있으면 "준비 중"으로 표시
 
+## 관리자 문의 관리 (admin)
+
+| 주소 | 내용 |
+|---|---|
+| / | 대시보드 (신규 수, 오늘 접수, 메일 실패, 최근 문의) |
+| /consults, /partners | 목록 (상태·과정/유형·기간 필터, 이름·연락처·접수번호 검색, 20건씩) |
+| /consults/{id}, /partners/{id} | 상세 + 처리(상태·담당자·메모) + 처리 이력 + 삭제 처리 |
+| /consults/export, /partners/export | 현재 필터 결과 CSV (UTF-8 BOM, 엑셀 수식 실행 방지) |
+| /notifications | 메일 알림 발송 기록 |
+
+- 상태: 신규(new) / 연락(contacted) / 상담완료(done) / 보류(hold) — `app/Libraries/InquiryStatus.php`
+- 처리할 때마다 `inquiry_memos` 에 이력 기록 (변경 전·후 상태, 담당자, 메모)
+- 삭제는 `deleted_at` 표시만 (목록에서 제외, DB 에 보관)
+- 상세 열람·CSV 내려받기·삭제는 `writable/logs/audit-날짜.log` 에 기록
+
 ## DB 마이그레이션
 
 마이그레이션은 admin 프로젝트에서만 관리한다.

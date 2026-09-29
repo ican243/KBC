@@ -27,6 +27,14 @@ class AdminModel extends Model
     public const MAX_FAILED   = 5;
     public const LOCK_MINUTES = 10;
 
+    /**
+     * 담당자 선택용 [id => 이름] (사용 중인 계정만)
+     */
+    public function options(): array
+    {
+        return array_column($this->select('id, name')->where('status', 'active')->orderBy('id')->findAll(), 'name', 'id');
+    }
+
     public function findByUsername(string $username): ?array
     {
         return $this->where('username', $username)->first();
