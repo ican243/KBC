@@ -20,7 +20,7 @@ kbc/
 | CodeIgniter | 4.7 |
 | DB | MySQL 8.0 / kbc_db (utf8mb4) |
 | 공개 홈페이지 | https://kir1.cafe24.com/kbc/ (개발용 하위경로, Basic Auth) |
-| 관리자 | http://admin.kbc.test (PC hosts 파일로 접속) |
+| 관리자 | https://kir1.cafe24.com/kbc/admin/ (개발용 하위경로, Basic Auth + 로그인 + 2단계 인증) |
 
 ## 설치
 
@@ -148,6 +148,17 @@ php spark db:seed InitialContentSeeder
 | inquiry_memos | 문의 메모·상태 이력 |
 | notification_logs | 알림 발송 기록 |
 
+## 관리자 로그인 / 2단계 인증 (admin)
+
+1. 아이디·비밀번호 → 2. OTP 앱(Google Authenticator 등) 6자리 또는 복구 코드
+- 2단계 인증을 설정하지 않은 계정은 로그인 후 설정 화면(`/account/2fa`)만 사용할 수 있다 (`app/Filters/AdminAuth.php`)
+- OTP 비밀키는 `.env` 의 `encryption.key` 로 암호화해 저장, QR 코드는 서버에서 SVG 로 생성 (`app/Libraries/TwoFactor.php`)
+- 복구 코드 8개는 설정 직후 한 번만 표시, 해시로 저장하고 한 번 쓰면 삭제
+- 비밀번호·OTP 5회 실패 시 10분 잠금
+- 비밀번호 변경: `/account/password` (10자 이상)
+- 휴대폰과 복구 코드를 모두 잃어버린 경우: `php spark admin:reset-2fa 아이디`
+- ⚠ `encryption.key` 가 바뀌면 기존 OTP 설정을 읽을 수 없으므로, 서버 이전 시 `.env` 를 그대로 옮기거나 모든 관리자 2단계 인증을 초기화한다
+
 ## 관리자 계정 생성
 
 ```bash
@@ -160,6 +171,8 @@ php spark admin:create
 ## nginx
 
 - `docs/nginx/kbc-user.conf`, `kbc-admin.conf` : 도메인 방식
-- `docs/nginx/kbc-subpath.conf` : 개발 기간 kir1.cafe24.com/kbc/ 하위경로 방식
+- `docs/nginx/kbc-subpath.conf` : 개발 기간 kir1.cafe24.com/kbc/ (공개), /kbc/admin/ (관리자) 하위경로 방식
+  - 두 경로 모두 Content-Security-Policy 적용 (같은 도메인의 스크립트만 실행) → 화면에 인라인 스크립트를 쓰지 않는다
+- `docs/nginx/kbc-admin.conf` : 예전 개발 주소(admin.kbc.test)를 새 주소로 이동
 
 도메인 연결 후에는 하위경로 include를 제거하고, user `.env`의 `app.baseURL`과 `cookie.path`를 도메인 기준으로 변경한다.

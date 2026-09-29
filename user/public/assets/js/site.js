@@ -28,6 +28,14 @@
         document.querySelectorAll('input[name="source"]').forEach(function (input) { input.value = source; });
     } catch (e) { /* 저장소를 쓸 수 없는 브라우저는 기록하지 않음 */ }
 
+    // 과정 카드의 "이 과정 상담하기"를 누르면 상담 폼에서 해당 과정 선택
+    document.querySelectorAll('[data-course]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+            var radio = document.querySelector('input[name="course_id"][value="' + btn.dataset.course + '"]');
+            if (radio) radio.checked = true;
+        });
+    });
+
     // 스크롤 시 요소 등장
     var items = document.querySelectorAll('.reveal');
     if ('IntersectionObserver' in window) {

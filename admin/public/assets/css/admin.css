@@ -99,3 +99,18 @@ dl.info dd { margin: 0; word-break: break-all; }
 /* 대시보드 카드 링크 */
 a.stat { display: block; color: inherit; }
 a.stat:hover { text-decoration: none; border-color: var(--navy-2); }
+
+/* 내 계정 / 2단계 인증 */
+.muted { color: var(--muted); font-size: 13.5px; }
+.steps-list { padding-left: 20px; }
+.steps-list li { margin: 4px 0; }
+.qr-wrap { display: flex; gap: 28px; align-items: flex-start; flex-wrap: wrap; margin-top: 16px; }
+.qr { padding: 10px; border: 1px solid var(--line); border-radius: 10px; background: #fff; line-height: 0; }
+.qr svg { width: 220px; height: 220px; }
+.secret { display: inline-block; padding: 8px 12px; border-radius: 6px; background: #f3f5f9; font-size: 15px; letter-spacing: 1px; word-break: break-all; }
+.otp-form { margin-top: 18px; display: flex; gap: 10px; align-items: flex-end; flex-wrap: wrap; }
+.otp-form label, .narrow-form label { display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--muted); }
+.codes { display: grid; grid-template-columns: repeat(2, max-content); gap: 8px 24px; padding: 16px 20px; margin: 16px 0 20px; list-style: none;
+         background: #f8f9fc; border: 1px dashed #cfd6e2; border-radius: 8px; }
+.codes code { font-size: 17px; letter-spacing: 1px; }
+.narrow-form { max-width: 420px; display: flex; flex-direction: column; gap: 14px; }

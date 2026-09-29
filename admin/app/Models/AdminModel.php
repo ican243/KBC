@@ -19,6 +19,8 @@ class AdminModel extends Model
         'failed_attempts',
         'locked_until',
         'totp_secret',
+        'totp_enabled_at',
+        'recovery_codes',
         'last_login_at',
         'last_login_ip',
     ];

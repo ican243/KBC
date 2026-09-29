@@ -66,13 +66,3 @@ $field     = static fn (string $key): string => form_error($key) ? ' has-error' 
         <button class="btn btn-navy btn-block" style="margin-top:8px">상담 신청하기</button>
     </form>
 </div></section>
-
-<script>
-// "이 과정 상담하기" 누르면 해당 과정 선택
-document.querySelectorAll('[data-course]').forEach(function (btn) {
-    btn.addEventListener('click', function () {
-        var radio = document.querySelector('input[name="course_id"][value="' + btn.dataset.course + '"]');
-        if (radio) radio.checked = true;
-    });
-});
-</script>

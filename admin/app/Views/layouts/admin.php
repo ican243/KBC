@@ -5,7 +5,7 @@
  * @var string $title
  */
 $current = service('uri')->getSegment(1);
-$menu    = ['' => '대시보드', 'consults' => '상담 문의', 'partners' => '협력 제안', 'notifications' => '알림 기록'];
+$menu    = ['' => '대시보드', 'consults' => '상담 문의', 'partners' => '협력 제안', 'notifications' => '알림 기록', 'account' => '내 계정'];
 ?>
 <!DOCTYPE html>
 <html lang="ko">
@@ -37,5 +37,6 @@ $menu    = ['' => '대시보드', 'consults' => '상담 문의', 'partners' => '
 
     <?= $this->renderSection('content') ?>
 </main>
+<script src="<?= asset('assets/js/admin.js') ?>"></script>
 </body>
 </html>

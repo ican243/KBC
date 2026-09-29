@@ -1,0 +1,17 @@
+/* 관리자 로그인 / 2단계 인증 화면 */
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: flex; align-items: center; justify-content: center;
+       background: #f3f5f9; font-family: -apple-system, "Malgun Gothic", sans-serif; color: #1c2533; }
+.box { width: 100%; max-width: 360px; margin: 16px; padding: 32px 28px; background: #fff;
+       border-radius: 10px; box-shadow: 0 2px 12px rgba(20, 35, 70, .08); }
+h1 { margin: 0 0 24px; font-size: 20px; color: #14264a; }
+label { display: block; margin: 14px 0 6px; font-size: 14px; }
+input { width: 100%; padding: 11px 12px; font-size: 15px; border: 1px solid #cfd6e2; border-radius: 6px; }
+input:focus { outline: 2px solid #2b4a8b; border-color: transparent; }
+button { width: 100%; margin-top: 22px; padding: 12px; font-size: 15px; color: #fff;
+         background: #14264a; border: 0; border-radius: 6px; cursor: pointer; }
+.error { margin: 0 0 8px; padding: 10px 12px; font-size: 14px; color: #a52a2a;
+         background: #fbeeee; border-radius: 6px; }
+.hint { margin: 0 0 18px; font-size: 14px; color: #5d6879; line-height: 1.6; }
+.ok { margin: 0 0 8px; padding: 10px 12px; font-size: 14px; color: #1e6b41; background: #e8f5ee; border-radius: 6px; }
+.sub { display: block; margin-top: 16px; text-align: center; font-size: 13px; color: #5d6879; }

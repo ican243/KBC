@@ -55,7 +55,7 @@
 </div>
 
 <form method="post" action="<?= site_url($path . '/' . $row['id'] . '/delete') ?>"
-      onsubmit="return confirm('이 문의를 삭제 처리할까요?\n목록에서 사라지며, 데이터는 복구를 위해 보관됩니다.')">
+      data-confirm="이 문의를 삭제 처리할까요?&#10;목록에서 사라지며, 데이터는 복구를 위해 보관됩니다.">
     <?= csrf_field() ?>
     <button class="btn btn-danger" type="submit">삭제 처리</button>
     <a class="btn btn-line" href="<?= site_url($path) ?>">목록으로</a>
