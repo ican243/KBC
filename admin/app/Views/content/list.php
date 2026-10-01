@@ -8,6 +8,7 @@
  * @var array  $columns   [제목 => fn(array): string]
  * @var bool   $deletable
  * @var bool   $sortable
+ * @var array  $confirms  [id => 삭제 확인 창 내용] (ContentController::deleteConfirm)
  */
 ?>
 <?= $this->extend('layouts/admin') ?>
@@ -45,9 +46,10 @@
                     <button class="btn btn-line" type="submit" formaction="<?= site_url($path . '/' . $r['id'] . '/toggle') ?>">
                         <?= $r['is_published'] ? '비공개로' : '공개로' ?>
                     </button>
-                    <?php if ($deletable): ?>
+                    <?php if ($deletable): $c = $confirms[$r['id']]; ?>
                     <button class="btn btn-danger" type="submit" formaction="<?= site_url($path . '/' . $r['id'] . '/delete') ?>"
-                            data-confirm="삭제할까요? 되돌릴 수 없습니다.">삭제</button>
+                            data-confirm="<?= esc($c['message'], 'attr') ?>" data-confirm-ok="<?= esc($c['ok'], 'attr') ?>" data-confirm-tone="<?= esc($c['tone'], 'attr') ?>"
+                            <?= $c['unpublish'] ? 'name="unpublish" value="1"' : '' ?><?= $c['info'] ? ' data-confirm-info' : '' ?>>삭제</button>
                     <?php endif ?>
                 </td>
             </tr>

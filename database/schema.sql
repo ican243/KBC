@@ -1,6 +1,6 @@
 -- KBC아카데미 DB 구조 (데이터 제외)
 -- 원본은 admin/app/Database/Migrations 이며, 이 파일은 참고/인수인계용으로 migrate 후 생성한다.
--- 생성: 2026-09-29
+-- 생성: 2026-10-01
 
 CREATE TABLE `admins` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,
@@ -48,7 +48,7 @@ CREATE TABLE `consult_inquiries` (
   KEY `consult_inquiries_assigned_admin_id_foreign` (`assigned_admin_id`),
   KEY `status_created_at` (`status`,`created_at`),
   CONSTRAINT `consult_inquiries_assigned_admin_id_foreign` FOREIGN KEY (`assigned_admin_id`) REFERENCES `admins` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  CONSTRAINT `consult_inquiries_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+  CONSTRAINT `consult_inquiries_course_id_foreign` FOREIGN KEY (`course_id`) REFERENCES `courses` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='교육 상담 신청';
 CREATE TABLE `courses` (
   `id` int unsigned NOT NULL AUTO_INCREMENT,

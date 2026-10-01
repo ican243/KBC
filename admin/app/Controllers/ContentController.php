@@ -19,7 +19,7 @@ abstract class ContentController extends BaseController
     /** 화면 제목 */
     protected string $label;
 
-    /** 삭제 허용 여부 (교육과정은 상담 기록이 참조하므로 false) */
+    /** 삭제 버튼 표시 여부 */
     protected bool $deletable = true;
 
     /** 목록에서 순서(sort_order) 입력 사용 */
@@ -42,15 +42,28 @@ abstract class ContentController extends BaseController
         return ['is_published' => 0];
     }
 
+    /**
+     * 목록의 삭제 버튼을 눌렀을 때 확인 창 내용
+     * message 안내 문구 / ok 확인 버튼 글자 / tone danger(빨강)·primary(남색)
+     * unpublish true 면 확인 시 "삭제 대신 비공개" 로 요청 / info true 면 안내만 하고 아무것도 보내지 않음
+     */
+    protected function deleteConfirm(array $row): array
+    {
+        return ['message' => '삭제할까요? 되돌릴 수 없습니다.', 'ok' => '삭제', 'tone' => 'danger', 'unpublish' => false, 'info' => false];
+    }
+
     public function index()
     {
+        $rows = $this->model()->listing();
+
         return view('content/list', [
             'title'     => $this->label,
             'path'      => $this->path,
-            'rows'      => $this->model()->listing(),
+            'rows'      => $rows,
             'columns'   => $this->columns(),
             'deletable' => $this->deletable,
             'sortable'  => $this->sortable,
+            'confirms'  => $this->deletable ? array_column(array_map(fn (array $r): array => ['id' => $r['id']] + $this->deleteConfirm($r), $rows), null, 'id') : [],
         ]);
     }
 

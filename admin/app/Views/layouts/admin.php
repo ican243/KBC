@@ -92,8 +92,8 @@ $menu = [
     <div class="confirm-box">
         <p id="confirmText"></p>
         <div class="confirm-foot">
-            <button type="button" class="btn btn-line" data-confirm-cancel>취소</button>
-            <button type="button" class="btn btn-danger" data-confirm-ok>확인</button>
+            <button type="button" class="btn btn-line" data-dialog-cancel>취소</button>
+            <button type="button" class="btn btn-danger" data-dialog-ok>확인</button>
         </div>
     </div>
 </dialog>

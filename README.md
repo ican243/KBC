@@ -217,7 +217,7 @@ php spark db:seed InitialContentSeeder
 
 | 주소 | 내용 |
 |---|---|
-| /courses | 교육과정 (확정 여부·교습비, 순서, 공개) — 상담 기록이 참조하므로 삭제 불가, 비공개만 |
+| /courses | 교육과정 (확정 여부·교습비, 순서, 공개) — 삭제는 연결된 상담 0건일 때만, 1건 이상이면 비공개 처리 안내 |
 | /instructors | 강사진 (사진 업로드, 게시 동의 체크 후에만 실명·사진·경력 공개) |
 | /notices | 공지 (게시일이 지나야 홈페이지에 표시 → 예약 게시) |
 | /events | 설명회 일정 (지난 일정은 홈페이지에서 자동 제외) |
@@ -225,6 +225,10 @@ php spark db:seed InitialContentSeeder
 | /settings | 사이트 설정 18개 (안내 문구, 운영 정보, 개인정보, 알림 이메일) |
 
 - 공통 처리: `app/Controllers/ContentController.php` (목록·등록·수정·공개 전환·순서·삭제), 메뉴별 컨트롤러는 입력 규칙만 정의
+- 교육과정 삭제 (`app/Controllers/Courses.php`): 삭제 버튼은 항상 보이고, 누른 시점에 서버가 연결된 상담 수(삭제 처리한 상담 포함)를 다시 센다
+  - 0건: 확인 후 실제 삭제 (잘못 만든 과정·시험 데이터 정리)
+  - 1건 이상: 삭제하지 않고 "상담 기록이 연결되어 있어 삭제할 수 없습니다. 비공개 처리하시겠습니까?" → 확인 시 비공개 (이미 비공개면 안내만)
+  - DB 도 연결된 상담이 있는 과정의 삭제를 거부 (`consult_inquiries.course_id` 외래키 ON DELETE RESTRICT) → 상담 이력의 관심 과정이 바뀌지 않음
 - 공지·FAQ 내용은 일반 글자만 저장 (HTML 에디터 없음)
 - 강사 사진 (`app/Libraries/ImageUpload.php`): JPG·PNG·WEBP 5MB 이하, 파일 내용으로 형식 확인, 4000px 이하,
   휴대폰 방향 보정 후 가로 800px JPG 로 다시 저장(EXIF·위치정보 제거), 무작위 파일명
@@ -254,6 +258,7 @@ php spark db:seed InitialContentSeeder
   - 글꼴 `public/assets/fonts/pretendard/` (공개 홈페이지와 같은 파일, SIL OFL)
   - 아이콘은 SVG 를 화면에 직접 넣는다: `icon('chat')` (`app/Helpers/admin_helper.php` 에 모양 목록)
   - 확인 창은 `<dialog>` + `public/assets/js/admin.js`. 폼이나 버튼에 `data-confirm="문구"` 를 붙이면 확인 후 진행
+    (`data-confirm-ok="삭제"` 확인 버튼 글자, `data-confirm-tone="primary"` 남색 버튼, `data-confirm-info` 안내만 하고 전송 안 함)
 - 화면들은 공통 이름(`box` 카드, `btn`·`btn-line`·`btn-danger` 버튼, `badge-상태` 배지, `stat` 요약 카드, `table-wrap` 표)만 쓰고, 모양은 CSS 에서만 정한다
 
 ## 관리자 로그인 / 2단계 인증 (admin)
