@@ -246,6 +246,16 @@ php spark db:seed InitialContentSeeder
 - 역할 변경·중지는 매 요청 DB 확인으로 즉시 적용
 - 서버 명령 `php spark admin:create` 도 역할 선택 (대표 관리자가 없으면 기본 owner)
 
+## 관리자 화면 모양 (admin)
+
+- 왼쪽 메뉴(묶음: 문의 / 홈페이지 / 계정) + 상단바, 휴대폰·태블릿(992px 미만)은 ☰ 로 메뉴를 연다
+- 외부 파일 없음 (보안 설정 CSP: 이 서버의 파일만 허용)
+  - 스타일 `public/assets/css/admin.css` (로그인·오류 화면은 `auth.css`), 색은 파일 맨 위 `:root` 에서 바꾼다
+  - 글꼴 `public/assets/fonts/pretendard/` (공개 홈페이지와 같은 파일, SIL OFL)
+  - 아이콘은 SVG 를 화면에 직접 넣는다: `icon('chat')` (`app/Helpers/admin_helper.php` 에 모양 목록)
+  - 확인 창은 `<dialog>` + `public/assets/js/admin.js`. 폼이나 버튼에 `data-confirm="문구"` 를 붙이면 확인 후 진행
+- 화면들은 공통 이름(`box` 카드, `btn`·`btn-line`·`btn-danger` 버튼, `badge-상태` 배지, `stat` 요약 카드, `table-wrap` 표)만 쓰고, 모양은 CSS 에서만 정한다
+
 ## 관리자 로그인 / 2단계 인증 (admin)
 
 1. 아이디·비밀번호 → 2. OTP 앱(Google Authenticator 등) 6자리 또는 복구 코드

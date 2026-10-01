@@ -55,11 +55,11 @@ $pct        = static fn (?float $v): string => $v === null ? '-' : $v . '%';
 <p class="help"><?= esc($from) ?> ~ <?= esc($to) ?> · 조회수는 페이지를 연 횟수입니다 (새로고침 포함, 검색엔진 로봇 제외, 개인정보 미수집).</p>
 
 <div class="stats">
-    <div class="stat"><span>상담 접수</span><b><?= number_format($summary['consults']) ?></b></div>
-    <div class="stat"><span>협력 제안</span><b><?= number_format($summary['partners']) ?></b></div>
-    <div class="stat"><span>상담완료 비율</span><b><?= $pct($summary['doneRate']) ?></b>
+    <div class="stat"><span class="stat-icon i-blue"><?= icon('chat') ?></span><span>상담 접수</span><b><?= number_format($summary['consults']) ?></b></div>
+    <div class="stat"><span class="stat-icon i-purple"><?= icon('briefcase') ?></span><span>협력 제안</span><b><?= number_format($summary['partners']) ?></b></div>
+    <div class="stat"><span class="stat-icon i-green"><?= icon('check') ?></span><span>상담완료 비율</span><b><?= $pct($summary['doneRate']) ?></b>
         <small class="muted"><?= $summary['done'] ?>건 완료</small></div>
-    <div class="stat"><span>과정 페이지 → 상담 전환</span><b><?= $pct($summary['conversion']) ?></b>
+    <div class="stat"><span class="stat-icon i-cyan"><?= icon('chart') ?></span><span>과정 페이지 → 상담 전환</span><b><?= $pct($summary['conversion']) ?></b>
         <small class="muted">과정 상세에서 온 상담 <?= $summary['fromCourse'] ?>건 ÷ 과정 상세 조회 <?= number_format($summary['courseViews']) ?>회</small></div>
 </div>
 
