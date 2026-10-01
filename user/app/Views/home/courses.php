@@ -1,7 +1,7 @@
 <?php
 /**
  * 과정 카드 (기획안 3장 3번) - courses 테이블
- * 확정 전(is_confirmed = 0)이면 "시간표·교습비 확정 전" 표시
+ * 확정 전(is_confirmed = 0)이면 "세부 시간표·교습비 확정 전" 표시
  *
  * @var array $courses
  */
@@ -22,7 +22,7 @@
             <div class="top">
                 <span class="dur"><?= esc($course['duration']) ?></span>
                 <?php if (! $course['is_confirmed']): ?>
-                    <span class="tag">시간표·교습비 확정 전</span>
+                    <span class="tag">세부 시간표·교습비 확정 전</span>
                 <?php endif ?>
             </div>
             <h3><?= esc($course['title']) ?></h3>

@@ -33,7 +33,7 @@ $rows = [
         <article class="course">
             <div class="top">
                 <span class="dur"><?= esc($c['duration']) ?></span>
-                <?php if (! $c['is_confirmed']): ?><span class="tag">시간표·교습비 확정 전</span><?php endif ?>
+                <?php if (! $c['is_confirmed']): ?><span class="tag">세부 시간표·교습비 확정 전</span><?php endif ?>
             </div>
             <h3><?= esc($c['title']) ?></h3>
             <p><?= esc($c['summary']) ?></p>
