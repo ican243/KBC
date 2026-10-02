@@ -22,7 +22,7 @@ kbc/
 | PHP | 8.3 |
 | CodeIgniter | 4.7 |
 | DB | MySQL 8.0 / kbc_db (utf8mb4) |
-| 공개 홈페이지 | https://kir1.cafe24.com/kbc/ (개발용 하위경로, Basic Auth) |
+| 공개 홈페이지 | https://kir1.cafe24.com/kbc/ (개발용 하위경로, 접속 잠금 없음 · 검색 차단) |
 | 관리자 | https://kir1.cafe24.com/kbc/admin/ (개발용 하위경로, Basic Auth + 로그인 + 2단계 인증) |
 
 ## 설치
